@@ -8,6 +8,14 @@ source specification iteration `v0.3`.
 
 ## Create a New Ledger
 
+Using the helper tool:
+
+```bash
+python -m tools.awl new "Task title" --slug task-title
+```
+
+Using only the templates:
+
 1. Decide that the task warrants a ledger.
 2. Create a unique owner ID.
 3. Create this structure:
@@ -26,6 +34,10 @@ working-ledger/<ledger-owner-id>/
    from the templates when useful.
 7. Record the active scope path in the agent response.
 8. Continue writing task state only inside that scope.
+
+The helper tool creates `OWNER.md`, `ledger.md`, `evidence/`, and `notes/` and
+refuses to overwrite an existing scope. Use `--handoff` or `--machine-state` to
+create optional sidecars.
 
 ## Work The Ledger
 

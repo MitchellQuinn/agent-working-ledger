@@ -2,8 +2,8 @@
 
 ## 0.1.0 - Unreleased
 
-- Preparing the first instruction-only Agent Working Ledger release from source
-  specification iteration `v0.3`.
+- Preparing the first Agent Working Ledger release from source specification
+  iteration `v0.3`.
 - Added the canonical standard at `spec/SPEC.md` plus focused reference docs for
   invariants, ownership, lifecycle, ledger scopes, validation/evidence, and
   security/privacy.
@@ -15,3 +15,7 @@
   and generic CLI wrapper material.
 - Added practical documentation for quickstart, installation, multi-agent use,
   plan boundaries, and anti-patterns.
+- Added optional read-only `awl check` tooling for validating a specified ledger
+  scope without creating, repairing, closing, or mutating ledgers.
+- Added optional `awl new` tooling for creating a fresh ledger scope that passes
+  `awl check` immediately and refuses to overwrite existing scopes.

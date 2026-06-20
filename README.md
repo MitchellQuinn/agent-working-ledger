@@ -12,14 +12,13 @@ resumed, reviewed, or handed off.
 
 ## Status
 
-This repository is preparing the `0.1.0` instruction-only release of Agent
-Working Ledger.
+This repository is preparing the `0.1.0` release of Agent Working Ledger.
 
 The source specification is currently on iteration `v0.3`; that specification
 version describes the ledger schema and behaviour. It is not the package release
 number. The `0.1.0` release proves the core architecture with spec docs,
 operation protocols, templates, the canonical skill package, thin runtime
-wrappers, and practical documentation.
+wrappers, practical documentation, and small optional helper tooling.
 
 ## Repository Layout
 
@@ -31,6 +30,8 @@ templates/                  Reusable ledger file templates
 skills/agent-working-ledger/ Canonical distributable skill package
 wrappers/                   Runtime-specific wrapper material
 docs/                       User-facing documentation
+tools/awl/                  Optional helper tooling
+tests/                      Unit tests for helper tooling
 ```
 
 ## Quick Start
@@ -46,11 +47,43 @@ docs/                       User-facing documentation
 5. See [docs/quickstart.md](docs/quickstart.md) for the create, resume, handoff,
    and closeout workflow.
 
+## Helper Tooling
+
+Create a new ledger scope:
+
+```bash
+python -m tools.awl new "OAuth refresh fix" --slug oauth-refresh-fix
+```
+
+Create optional sidecars at creation time:
+
+```bash
+python -m tools.awl new "OAuth refresh fix" --handoff --machine-state
+```
+
+Run the read-only checker against a ledger scope:
+
+```bash
+python -m tools.awl check working-ledger/<ledger-owner-id>/
+```
+
+When installed as a package, the console script is:
+
+```bash
+awl new "OAuth refresh fix" --slug oauth-refresh-fix
+awl check working-ledger/<ledger-owner-id>/
+```
+
+`awl new` creates a fresh scope and refuses to overwrite existing scopes.
+`awl check` validates required files, owner ID consistency, lifecycle states,
+validation statuses, closeout requirements, supersession hints, and optional
+`machine-state.json` consistency.
+
 ## Release Boundary
 
-The `0.1.0` release is instruction-only. It intentionally does not ship a CLI,
-code generator, examples package, eval suite, hooks, or CI checks. Future tooling
-may automate create, check, summarize, list, and close operations, but the
+The `0.1.0` release intentionally does not ship repair, summarize, list, close,
+or supersede commands, code generators, examples packages, eval suites, hooks,
+or CI checks. Future tooling may automate more operations, but the
 human-readable `ledger.md` remains the authority.
 
 ## Core Rule

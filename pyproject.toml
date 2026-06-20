@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agent-working-ledger"
+version = "0.1.0"
+description = "Agent Working Ledger specification, templates, wrappers, and optional read-only checks."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+authors = [
+  { name = "Agent Working Ledger contributors" }
+]
+dependencies = []
+
+[project.scripts]
+awl = "tools.awl.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["tools*"]

@@ -1,8 +1,7 @@
 # Installation
 
-Agent Working Ledger `0.1.0` is instruction-only. Installation means copying the
-skill and, where useful, wrapper instructions into the target agent runtime. No
-CLI or package manager install is required.
+Agent Working Ledger `0.1.0` includes the core skill, wrapper instructions, and
+optional helper tooling.
 
 The source specification iteration is `v0.3`; optional `machine-state.json`
 files should use `schema_version: "0.3"`.
@@ -72,3 +71,29 @@ working-ledger/<ledger-owner-id>/
 This repository ignores `working-ledger/` so development ledgers are not
 committed by accident. Projects that want to commit ledgers can change that
 policy locally.
+
+## Optional Tooling
+
+Create a ledger without installing:
+
+```bash
+python -m tools.awl new "Task title" --slug task-title
+```
+
+Run the checker without installing:
+
+```bash
+python -m tools.awl check working-ledger/<ledger-owner-id>/
+```
+
+Install the package in editable mode to expose the `awl` console script:
+
+```bash
+python -m pip install -e .
+awl new "Task title" --slug task-title
+awl check working-ledger/<ledger-owner-id>/
+```
+
+`awl new` creates a fresh scope and refuses to overwrite existing scopes.
+`awl check` is read-only. It reports errors and warnings but does not create,
+repair, close, supersede, or otherwise mutate ledger scopes.

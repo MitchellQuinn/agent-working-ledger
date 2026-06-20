@@ -9,6 +9,13 @@ argument-hint: "[optional-existing-ledger-scope-or-task-title]"
 Use the core Agent Working Ledger standard without changing the schema or
 ownership model.
 
+Recommended install paths:
+
+```text
+.claude/skills/agent-working-ledger/SKILL.md
+~/.claude/skills/agent-working-ledger/SKILL.md
+```
+
 Recommended owner ID when `${CLAUDE_SESSION_ID}` is available:
 
 ```text
@@ -31,6 +38,12 @@ working-ledger/<owner-id>/
   notes/
 ```
 
+Optional files are `handoff.md` and `machine-state.json` when useful. Use
+`schema_version: "0.3"` for optional machine state because it tracks the ledger
+schema/spec iteration, not the package release.
+
 Do not update unrelated `working-ledger/*/` scopes unless the user explicitly
 names one.
 
+If running subagents, do not assume subagents may write to the parent scope. Have
+them return a summary, create their own scope, or provide a bounded handoff note.

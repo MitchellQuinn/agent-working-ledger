@@ -1,5 +1,6 @@
 # <Task title>
 
+Ledger schema version: 0.3
 Lifecycle State: Created | Oriented | Planned | Active | Blocked | Ready for Review | Closed | Superseded
 Created: <ISO timestamp>
 Last updated: <ISO timestamp>
@@ -56,6 +57,8 @@ Related branch/issue/plan/ledger: <optional>
   Evidence: <short output, observation, or evidence file path>
   Follow-up: <if needed>
 
+Overall validation status: Not Run | Failed | Passed | Partially Verified | Stale | Not Applicable
+
 ## Blockers and risks
 
 - Blocker/risk: <description>
@@ -82,4 +85,3 @@ To resume safely:
 ## Outcome / retrospective
 
 <Complete at major milestones and task closeout.>
-

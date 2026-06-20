@@ -18,3 +18,26 @@ Rules:
 9. Do not adopt unrelated scopes unless the user explicitly assigns one.
 10. Distinguish plans, ledgers, evidence, and handoff notes.
 
+Use only these validation statuses:
+
+- Not Run
+- Failed
+- Passed
+- Partially Verified
+- Stale
+- Not Applicable
+
+Use only these lifecycle states:
+
+- Created
+- Oriented
+- Planned
+- Active
+- Blocked
+- Ready for Review
+- Closed
+- Superseded
+
+Optional files are `handoff.md` and `machine-state.json` when useful. Optional
+machine state uses `schema_version: "0.3"` because it tracks the ledger
+schema/spec iteration, not the package release.

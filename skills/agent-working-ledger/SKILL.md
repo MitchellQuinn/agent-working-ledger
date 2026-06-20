@@ -8,10 +8,24 @@ description: Use for long-running, multi-step, exploratory, interruptible, valid
 Use this skill when work is complex enough that durable execution state is more
 valuable than the overhead of maintaining it.
 
+## Trigger
+
+Use this skill for long-running, multi-step, exploratory, interruption-prone,
+validation-heavy, handoff-prone, migration, refactor, debugging, eval-loop, or
+multi-agent work.
+
+Also use it when the user asks for a working memory, working ledger, task
+ledger, worklog, continuation file, implementation log, recovery file, or
+handoff note.
+
+Do not use it for simple one-shot answers, small single-file edits, purely
+conversational tasks, or when the user explicitly asks not to create files.
+
 ## Core Rule
 
-Each agent thread works inside exactly one active ledger scope. Write only inside
-that scope unless the user explicitly directs you to use another one.
+Each agent thread works inside exactly one active ledger scope. Write task-state
+files only inside that scope unless the user explicitly directs you to use
+another one.
 
 Default root:
 
@@ -29,6 +43,17 @@ working-ledger/<ledger-owner-id>/
   notes/
 ```
 
+Optional files:
+
+```text
+working-ledger/<ledger-owner-id>/
+  handoff.md
+  machine-state.json
+```
+
+`ledger.md` is the human-readable authority. Optional machine-readable state only
+mirrors it.
+
 ## Create
 
 When no existing scope is supplied:
@@ -39,6 +64,7 @@ When no existing scope is supplied:
 4. Create `ledger.md` from the ledger template.
 5. Create `evidence/` and `notes/`.
 6. Tell the user which scope is active.
+7. Continue using only that scope.
 
 Use a runtime session ID when available. Otherwise use:
 
@@ -56,6 +82,26 @@ When the user provides an existing scope:
 4. Continue from `Next actions` and `Recovery notes`.
 
 Do not silently adopt the newest or most plausible existing scope.
+
+If `OWNER.md` is missing but the user explicitly supplied the scope, create it
+only after noting that ownership metadata was missing.
+
+## Lifecycle
+
+Use only these lifecycle states:
+
+- Created
+- Oriented
+- Planned
+- Active
+- Blocked
+- Ready for Review
+- Closed
+- Superseded
+
+Keep the lifecycle state visible near the top of `ledger.md`. Closed ledgers
+should not be reopened casually; create a new ledger or supersede the old one
+unless the user explicitly directs reopening.
 
 ## Maintain
 
@@ -77,6 +123,14 @@ Keep these sections current:
 - Recovery notes
 - Outcome / retrospective
 
+When a fact affects several sections, update all affected sections. Examples:
+
+- If a decision changes the plan, update `Decision log` and `Active plan`.
+- If an assumption is invalidated, update `Assumptions`, `Discoveries`, and
+  possibly `Active plan`.
+- If validation becomes stale, mark it `Stale`.
+- If progress is partial, split the item instead of marking it complete.
+
 Validation results must use one of:
 
 - Not Run
@@ -86,6 +140,42 @@ Validation results must use one of:
 - Stale
 - Not Applicable
 
+Each validation entry must include the command or check, result, evidence, and
+follow-up. Large evidence belongs in `evidence/` with a concise reference in
+`ledger.md`.
+
+## Recover
+
+At the start of a resumed work segment:
+
+1. Confirm the active ledger scope.
+2. Read `OWNER.md`, `ledger.md`, and `handoff.md` if present.
+3. Check whether lifecycle state, next actions, active plan, progress, files
+   mentioned, and validation status still match the repository.
+4. Repair only the active ledger before proceeding if inconsistencies are found.
+
+## Handoff, Close, And Supersede
+
+Before handing off, update `ledger.md` and optionally create or update
+`handoff.md`. The handoff note is a compressed continuation artifact, not the
+authority.
+
+Close a ledger only when the task or milestone is complete, abandoned, or
+intentionally stopped. Temporary pauses require recovery notes, not closure.
+
+Supersede a ledger when another ledger, plan, issue, or execution path replaces
+it. Record what superseded it, why, whether any work remains useful, and where
+continuation should happen.
+
+## Subagents
+
+Each independent subagent, fork, or parallel agent should have its own ledger
+scope unless the user explicitly assigns it to an existing one. A subagent
+should return a summary to the parent, provide its own ledger path, or write a
+bounded handoff note in its own scope.
+
+Do not let subagents write into the parent ledger unless explicitly instructed.
+
 ## Safety
 
 Do not write secrets, credentials, tokens, private keys, or unnecessary personal
@@ -94,3 +184,6 @@ data into a ledger. Summarize or redact risky evidence before recording it.
 Do not treat `working-ledger/` as shared memory. It is a container for isolated
 ledger scopes.
 
+Do not use the ledger as a substitute for tests, source control, issue tracking,
+or a formal project plan. A plan records intended work. The working ledger
+records actual execution state.

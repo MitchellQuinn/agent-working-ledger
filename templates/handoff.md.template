@@ -5,6 +5,9 @@ Ledger owner ID: <ledger-owner-id>
 Lifecycle state: <state>
 Last updated: <ISO timestamp>
 
+This file is a compressed continuation note. It does not replace `ledger.md`,
+which remains the task-state authority.
+
 ## Current objective
 
 <one paragraph>
@@ -37,4 +40,3 @@ Last updated: <ISO timestamp>
 ## Resume command/checks
 
 - <commands or inspections>
-

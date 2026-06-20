@@ -14,3 +14,4 @@ Do not write to unrelated ledger scopes merely because they exist.
 Keep the active ledger updated with progress, discoveries, decisions, validation
 evidence, blockers, next actions, and recovery notes.
 
+A plan records intended work. The working ledger records actual execution state.

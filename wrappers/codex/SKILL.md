@@ -25,6 +25,12 @@ working-ledger/<owner-id>/
   notes/
 ```
 
-Record whether the owner ID came from a session ID or was generated. Do not
-update other ledger scopes unless the user explicitly names one.
+Optional files are `handoff.md` and `machine-state.json` when useful. Use
+`schema_version: "0.3"` for optional machine state because it tracks the ledger
+schema/spec iteration, not the package release.
 
+Record whether the owner ID came from a session ID or was generated. Treat
+project instructions such as `AGENTS.md` as wrapper-level invocation material,
+not a replacement for the core standard.
+
+Do not update other ledger scopes unless the user explicitly names one.

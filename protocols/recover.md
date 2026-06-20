@@ -2,6 +2,16 @@
 
 Use this protocol at the start of a resumed work segment.
 
+## Inputs
+
+- Explicitly supplied, created, or wrapper-assigned active ledger scope
+- Current repository state
+
+## Preconditions
+
+- The agent knows which ledger scope is active.
+- The agent is not guessing from unrelated ledgers.
+
 ## Steps
 
 1. Confirm the active ledger scope.
@@ -17,8 +27,17 @@ Use this protocol at the start of a resumed work segment.
 11. Check whether files changed unexpectedly.
 12. Repair the active ledger before proceeding if inconsistencies are found.
 
-## Boundary
+## Failure Behaviour
 
 Do not repair ledgers outside the active ledger scope unless the user explicitly
 asks for an audit or repair.
 
+If multiple ledgers are plausible and none was explicitly supplied, stop and ask
+the user to choose. Listing candidates is not adoption.
+
+## Postconditions
+
+- The agent understands current objective, progress, validation status,
+  blockers, next actions, and recovery notes.
+- Any repair is recorded in the active ledger.
+- The active plan is safe to continue or the blocker is explicit.

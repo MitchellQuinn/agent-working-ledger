@@ -3,6 +3,9 @@
 Use Agent Working Ledger for work that may need to be resumed, reviewed, audited,
 or handed off.
 
+This repository is preparing package release `0.1.0`. The ledger schema follows
+source specification iteration `v0.3`.
+
 ## Create a New Ledger
 
 1. Decide that the task warrants a ledger.
@@ -19,7 +22,24 @@ working-ledger/<ledger-owner-id>/
 
 4. Fill `OWNER.md` from [../templates/OWNER.md.template](../templates/OWNER.md.template).
 5. Fill `ledger.md` from [../templates/ledger.md.template](../templates/ledger.md.template).
-6. Record the active scope path in the agent response.
+6. Optionally add `handoff.md`, `machine-state.json`, or an evidence README
+   from the templates when useful.
+7. Record the active scope path in the agent response.
+8. Continue writing task state only inside that scope.
+
+## Work The Ledger
+
+Update `ledger.md` after meaningful checkpoints:
+
+- progress changes
+- discoveries that affect the plan
+- decisions between meaningful alternatives
+- validation failures or passes
+- pauses, handoffs, closeout, or supersession
+
+When a discovery changes the approach, update the active plan as well as the
+discovery or decision entry. When validation may have been invalidated by later
+changes, mark it `Stale`.
 
 ## Resume From a Ledger
 
@@ -30,9 +50,20 @@ working-ledger/<ledger-owner-id>/
 5. Check validation freshness, blockers, next actions, and recovery notes.
 6. Repair inconsistencies in the active ledger before continuing.
 
+## Handoff
+
+1. Update `ledger.md` first.
+2. Create or refresh `handoff.md` when a compressed continuation note is useful.
+3. Include the active ledger path, current objective, current state, files
+   touched, next actions, work not to redo, traps, validation status, and resume
+   checks.
+4. Keep `ledger.md` as the authority; the handoff note is only a summary.
+
 ## Close a Ledger
 
 Close a ledger only when the task or milestone is actually complete, abandoned,
 or intentionally stopped. Update validation status, remaining risks, next
 actions, recovery notes, and the outcome / retrospective.
 
+Do not close a ledger merely because the agent is pausing. For temporary stops,
+update recovery notes and leave the lifecycle state accurate.

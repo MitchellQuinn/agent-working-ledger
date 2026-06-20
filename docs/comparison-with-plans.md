@@ -23,3 +23,12 @@ decisions, validation status, and next actions as needed.
 The ledger is task-local and operational. It is not a project-management system,
 permanent architecture record, or replacement for tests.
 
+## Practical Rule
+
+Keep the plan and ledger synchronized only where they overlap. If investigation
+invalidates the plan, revise the ledger's `Active plan` section and record the
+discovery or decision that caused the change.
+
+Do not preserve obsolete intended work in the active plan just because it was the
+original plan. Preserve obsolete context in discoveries, decisions, notes, or
+handoff material instead.

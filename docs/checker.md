@@ -27,8 +27,13 @@ python -m tools.awl check working-ledger/<ledger-owner-id>/ --format json
 - Owner ID consistency across scope path, `OWNER.md`, `ledger.md`, and optional
   `machine-state.json`.
 - Required `ledger.md` headings.
+- `Last updated` is present and concrete.
+- `Progress` contains checkbox items.
+- `Next actions` and `Decision log` are not empty.
 - Valid lifecycle state.
 - Valid validation statuses.
+- Validation evidence entries include command/check, result, evidence, and
+  follow-up structure.
 - Closed ledgers include an outcome or retrospective.
 - Superseded ledgers name what replaced them where possible.
 - Optional `machine-state.json` parses and does not obviously conflict with

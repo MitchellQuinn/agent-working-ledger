@@ -19,3 +19,7 @@
   scope without creating, repairing, closing, or mutating ledgers.
 - Added optional `awl new` tooling for creating a fresh ledger scope that passes
   `awl check` immediately and refuses to overwrite existing scopes.
+- Added read-only `awl summarize` and `awl list` commands.
+- Added bounded mutating `awl close` and `awl supersede` commands for explicitly
+  supplied scopes.
+- Added examples, evaluation scenario docs, CI, and release checklist material.

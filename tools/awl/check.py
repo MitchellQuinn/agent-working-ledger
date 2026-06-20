@@ -1,48 +1,23 @@
 from __future__ import annotations
 
 import json
-import re
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-
-VALID_LIFECYCLE_STATES = {
-    "Created",
-    "Oriented",
-    "Planned",
-    "Active",
-    "Blocked",
-    "Ready for Review",
-    "Closed",
-    "Superseded",
-}
-
-VALID_VALIDATION_STATUSES = {
-    "Not Run",
-    "Failed",
-    "Passed",
-    "Partially Verified",
-    "Stale",
-    "Not Applicable",
-}
-
-REQUIRED_LEDGER_HEADINGS = (
-    "Current objective",
-    "Current state summary",
-    "Assumptions",
-    "Progress",
-    "Active plan",
-    "Discoveries",
-    "Decision log",
-    "Validation evidence",
-    "Blockers and risks",
-    "Next actions",
-    "Recovery notes",
-    "Outcome / retrospective",
+from .markdown import (
+    REQUIRED_LEDGER_HEADINGS,
+    VALID_LIFECYCLE_STATES,
+    VALID_VALIDATION_STATUSES,
+    checkbox_count,
+    field,
+    has_heading,
+    has_placeholder,
+    has_substantive_content,
+    section,
+    validation_entries,
+    validation_status_values,
 )
-
-PLACEHOLDER_RE = re.compile(r"<[^>]+>")
 
 
 @dataclass(frozen=True)
@@ -129,7 +104,7 @@ def check_scope(scope: str | Path) -> CheckResult:
     owner_id_values: list[tuple[str, str]] = [("scope path", scope_path.name)]
 
     if owner_text is not None:
-        owner_id = _field(owner_text, "Ledger owner ID")
+        owner_id = field(owner_text, "Ledger owner ID")
         if owner_id:
             owner_id_values.append(("OWNER.md", owner_id))
             _check_no_placeholder(owner_id, "OWNER_ID_PLACEHOLDER", "OWNER.md owner ID is still a placeholder.", owner_path, findings)
@@ -140,14 +115,14 @@ def check_scope(scope: str | Path) -> CheckResult:
     ledger_validation_status: str | None = None
 
     if ledger_text is not None:
-        ledger_owner_id = _field(ledger_text, "Ledger owner ID")
+        ledger_owner_id = field(ledger_text, "Ledger owner ID")
         if ledger_owner_id:
             owner_id_values.append(("ledger.md", ledger_owner_id))
             _check_no_placeholder(ledger_owner_id, "LEDGER_OWNER_ID_PLACEHOLDER", "ledger.md owner ID is still a placeholder.", ledger_path, findings)
         else:
             findings.append(Finding("error", "LEDGER_OWNER_ID_MISSING", "ledger.md is missing Ledger owner ID.", str(ledger_path)))
 
-        ledger_lifecycle = _field(ledger_text, "Lifecycle State")
+        ledger_lifecycle = field(ledger_text, "Lifecycle State")
         if ledger_lifecycle:
             _check_enum(
                 ledger_lifecycle,
@@ -160,9 +135,13 @@ def check_scope(scope: str | Path) -> CheckResult:
         else:
             findings.append(Finding("error", "LIFECYCLE_STATE_MISSING", "ledger.md is missing Lifecycle State.", str(ledger_path)))
 
+        _check_last_updated(ledger_text, ledger_path, findings)
         _check_required_headings(ledger_text, ledger_path, findings)
+        _check_progress(ledger_text, ledger_path, findings)
+        _check_non_empty_sections(ledger_text, ledger_path, findings)
         _check_validation_statuses(ledger_text, ledger_path, findings)
-        ledger_validation_status = _field(ledger_text, "Overall validation status")
+        _check_validation_structure(ledger_text, ledger_path, findings)
+        ledger_validation_status = field(ledger_text, "Overall validation status")
         _check_closeout(ledger_text, ledger_lifecycle, ledger_path, findings)
         _check_superseded(ledger_text, ledger_lifecycle, ledger_path, findings)
 
@@ -203,15 +182,8 @@ def _read_text(path: Path, findings: list[Finding]) -> str | None:
     return None
 
 
-def _field(text: str, name: str) -> str | None:
-    match = re.search(rf"^{re.escape(name)}:\s*(.*?)\s*$", text, re.MULTILINE)
-    if not match:
-        return None
-    return match.group(1).strip()
-
-
 def _check_no_placeholder(value: str, code: str, message: str, path: Path, findings: list[Finding]) -> None:
-    if PLACEHOLDER_RE.search(value):
+    if has_placeholder(value):
         findings.append(Finding("error", code, message, str(path)))
 
 
@@ -229,15 +201,32 @@ def _check_enum(
 
 def _check_required_headings(text: str, path: Path, findings: list[Finding]) -> None:
     for heading in REQUIRED_LEDGER_HEADINGS:
-        if not re.search(rf"^## {re.escape(heading)}\s*$", text, re.MULTILINE):
+        if not has_heading(text, heading):
             findings.append(Finding("error", "LEDGER_HEADING_MISSING", f"Missing required heading: ## {heading}", str(path)))
 
 
+def _check_last_updated(text: str, path: Path, findings: list[Finding]) -> None:
+    last_updated = field(text, "Last updated")
+    if not last_updated:
+        findings.append(Finding("error", "LAST_UPDATED_MISSING", "ledger.md is missing Last updated.", str(path)))
+    elif has_placeholder(last_updated):
+        findings.append(Finding("error", "LAST_UPDATED_PLACEHOLDER", "Last updated is still a placeholder.", str(path)))
+
+
+def _check_progress(text: str, path: Path, findings: list[Finding]) -> None:
+    progress = section(text, "Progress")
+    if checkbox_count(progress) == 0:
+        findings.append(Finding("error", "PROGRESS_CHECKBOX_MISSING", "Progress section must contain checkbox items.", str(path)))
+
+
+def _check_non_empty_sections(text: str, path: Path, findings: list[Finding]) -> None:
+    for heading in ("Next actions", "Decision log"):
+        if has_heading(text, heading) and not has_substantive_content(section(text, heading)):
+            findings.append(Finding("warning", "LEDGER_SECTION_EMPTY", f"Section should not be empty: ## {heading}", str(path)))
+
+
 def _check_validation_statuses(text: str, path: Path, findings: list[Finding]) -> None:
-    statuses: list[str] = []
-    for field_name in ("Result", "Overall validation status"):
-        for match in re.finditer(rf"^\s*{re.escape(field_name)}:\s*(.*?)\s*$", text, re.MULTILINE):
-            statuses.append(match.group(1).strip())
+    statuses = validation_status_values(text)
 
     if not statuses:
         findings.append(Finding("warning", "VALIDATION_STATUS_ABSENT", "No validation status entries found.", str(path)))
@@ -248,11 +237,28 @@ def _check_validation_statuses(text: str, path: Path, findings: list[Finding]) -
             findings.append(Finding("error", "INVALID_VALIDATION_STATUS", f"Invalid validation status: {status}", str(path)))
 
 
+def _check_validation_structure(text: str, path: Path, findings: list[Finding]) -> None:
+    entries = validation_entries(text)
+    if not entries:
+        findings.append(Finding("warning", "VALIDATION_ENTRY_ABSENT", "Validation evidence should include at least one Command/check entry.", str(path)))
+        return
+
+    for index, entry in enumerate(entries, start=1):
+        if not entry.command_check:
+            findings.append(Finding("warning", "VALIDATION_COMMAND_MISSING", f"Validation entry {index} is missing Command/check text.", str(path)))
+        if not entry.result:
+            findings.append(Finding("warning", "VALIDATION_RESULT_MISSING", f"Validation entry {index} is missing Result.", str(path)))
+        if not entry.evidence:
+            findings.append(Finding("warning", "VALIDATION_EVIDENCE_MISSING", f"Validation entry {index} is missing Evidence.", str(path)))
+        if not entry.follow_up:
+            findings.append(Finding("warning", "VALIDATION_FOLLOW_UP_MISSING", f"Validation entry {index} is missing Follow-up.", str(path)))
+
+
 def _check_closeout(text: str, lifecycle: str | None, path: Path, findings: list[Finding]) -> None:
     if lifecycle != "Closed":
         return
-    outcome = _section(text, "Outcome / retrospective")
-    if not _has_substantive_content(outcome):
+    outcome = section(text, "Outcome / retrospective")
+    if not has_substantive_content(outcome):
         findings.append(Finding("error", "CLOSED_OUTCOME_MISSING", "Closed ledger must include an outcome or retrospective.", str(path)))
 
 
@@ -261,10 +267,10 @@ def _check_superseded(text: str, lifecycle: str | None, path: Path, findings: li
         return
     searchable = " ".join(
         part for part in (
-            _section(text, "Current state summary"),
-            _section(text, "Next actions"),
-            _section(text, "Recovery notes"),
-            _section(text, "Outcome / retrospective"),
+            section(text, "Current state summary"),
+            section(text, "Next actions"),
+            section(text, "Recovery notes"),
+            section(text, "Outcome / retrospective"),
         )
         if part
     ).lower()
@@ -280,29 +286,8 @@ def _check_superseded(text: str, lifecycle: str | None, path: Path, findings: li
         )
 
 
-def _section(text: str, heading: str) -> str:
-    match = re.search(rf"^## {re.escape(heading)}\s*$", text, re.MULTILINE)
-    if not match:
-        return ""
-    start = match.end()
-    next_heading = re.search(r"^## .*$", text[start:], re.MULTILINE)
-    end = start + next_heading.start() if next_heading else len(text)
-    return text[start:end].strip()
-
-
-def _has_substantive_content(text: str) -> bool:
-    stripped = text.strip()
-    if not stripped:
-        return False
-    if PLACEHOLDER_RE.fullmatch(stripped):
-        return False
-    if stripped.lower() in {"todo", "tbd", "n/a", "not applicable"}:
-        return False
-    return True
-
-
 def _check_owner_id_consistency(owner_id_values: list[tuple[str, str]], findings: list[Finding]) -> None:
-    concrete = [(source, value) for source, value in owner_id_values if not PLACEHOLDER_RE.search(value)]
+    concrete = [(source, value) for source, value in owner_id_values if not has_placeholder(value)]
     if not concrete:
         return
     expected_source, expected_value = concrete[0]

@@ -86,6 +86,78 @@ class CheckScopeTests(unittest.TestCase):
             self.assertIn("MACHINE_STATE_LIFECYCLE_CONFLICT", codes)
             self.assertIn("MACHINE_STATE_VALIDATION_CONFLICT", codes)
 
+    def test_missing_last_updated_is_error(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            scope = _write_scope(Path(tmp), "missing-last-updated")
+            ledger_path = scope / "ledger.md"
+            text = ledger_path.read_text(encoding="utf-8")
+            ledger_path.write_text(text.replace("Last updated: 2026-06-20T00:00:00Z\n", ""), encoding="utf-8")
+
+            result = check_scope(scope)
+
+            self.assertFalse(result.ok)
+            self.assertIn("LAST_UPDATED_MISSING", _codes(result))
+
+    def test_progress_requires_checkbox(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            scope = _write_scope(Path(tmp), "no-progress-checkbox")
+            ledger_path = scope / "ledger.md"
+            text = ledger_path.read_text(encoding="utf-8")
+            ledger_path.write_text(text.replace("- [x] Fixture created.", "- Fixture created."), encoding="utf-8")
+
+            result = check_scope(scope)
+
+            self.assertFalse(result.ok)
+            self.assertIn("PROGRESS_CHECKBOX_MISSING", _codes(result))
+
+    def test_empty_next_actions_and_decision_log_are_warnings(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            scope = _write_scope(Path(tmp), "empty-sections")
+            ledger_path = scope / "ledger.md"
+            text = ledger_path.read_text(encoding="utf-8")
+            text = text.replace(
+                """## Decision log
+
+- Decision: Use unittest fixtures.
+  Rationale: Avoid external dependencies.
+  Alternatives considered: pytest fixtures.
+  Consequences: Tests run with stdlib.
+  Date/Author: 2026-06-20T00:00:00Z / test
+
+## Validation evidence""",
+                """## Decision log
+
+## Validation evidence""",
+            )
+            text = text.replace(
+                """## Next actions
+
+1. Continue.
+
+## Recovery notes""",
+                """## Next actions
+
+## Recovery notes""",
+            )
+            ledger_path.write_text(text, encoding="utf-8")
+
+            result = check_scope(scope)
+
+            self.assertTrue(result.ok)
+            self.assertIn("LEDGER_SECTION_EMPTY", _codes(result))
+
+    def test_validation_entry_missing_evidence_is_warning(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            scope = _write_scope(Path(tmp), "missing-validation-evidence")
+            ledger_path = scope / "ledger.md"
+            text = ledger_path.read_text(encoding="utf-8")
+            ledger_path.write_text(text.replace("  Evidence: Static fixture content.\n", ""), encoding="utf-8")
+
+            result = check_scope(scope)
+
+            self.assertTrue(result.ok)
+            self.assertIn("VALIDATION_EVIDENCE_MISSING", _codes(result))
+
     def test_cli_returns_nonzero_for_errors(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             scope = _write_scope(Path(tmp), "invalid-state", lifecycle="Reviewing")

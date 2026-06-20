@@ -30,6 +30,8 @@ templates/                  Reusable ledger file templates
 skills/agent-working-ledger/ Canonical distributable skill package
 wrappers/                   Runtime-specific wrapper material
 docs/                       User-facing documentation
+examples/                   Example ledger scopes
+evals/                      Evaluation scenarios and rubrics
 tools/awl/                  Optional helper tooling
 tests/                      Unit tests for helper tooling
 ```
@@ -65,6 +67,8 @@ Run the read-only checker against a ledger scope:
 
 ```bash
 python -m tools.awl check working-ledger/<ledger-owner-id>/
+python -m tools.awl summarize working-ledger/<ledger-owner-id>/
+python -m tools.awl list --root working-ledger
 ```
 
 When installed as a package, the console script is:
@@ -72,19 +76,30 @@ When installed as a package, the console script is:
 ```bash
 awl new "OAuth refresh fix" --slug oauth-refresh-fix
 awl check working-ledger/<ledger-owner-id>/
+awl summarize working-ledger/<ledger-owner-id>/
+awl list --root working-ledger
 ```
 
 `awl new` creates a fresh scope and refuses to overwrite existing scopes.
 `awl check` validates required files, owner ID consistency, lifecycle states,
 validation statuses, closeout requirements, supersession hints, and optional
-`machine-state.json` consistency.
+`machine-state.json` consistency. `awl summarize` and `awl list` are read-only.
+`awl close` and `awl supersede` mutate only the explicitly supplied scope.
 
 ## Release Boundary
 
-The `0.1.0` release intentionally does not ship repair, summarize, list, close,
-or supersede commands, code generators, examples packages, eval suites, hooks,
-or CI checks. Future tooling may automate more operations, but the
-human-readable `ledger.md` remains the authority.
+The `0.1.0` release intentionally does not ship repair commands, code
+generators, install helpers, or issue-tracker integrations. Future tooling may
+automate more operations, but the human-readable `ledger.md` remains the
+authority.
+
+## Release Checklist
+
+- Run `python -m unittest discover -s tests`.
+- Run `python -m compileall -q tools tests`.
+- Run `python -m tools.awl --version`.
+- Run `python -m tools.awl check <example-scope>` for representative examples.
+- Confirm wrappers do not redefine the core schema.
 
 ## Core Rule
 

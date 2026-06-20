@@ -92,6 +92,8 @@ Install the package in editable mode to expose the `awl` console script:
 python -m pip install -e .
 awl new "Task title" --slug task-title
 awl check working-ledger/<ledger-owner-id>/
+awl summarize working-ledger/<ledger-owner-id>/
+awl list --root working-ledger
 ```
 
 `awl new` creates a fresh scope and refuses to overwrite existing scopes.

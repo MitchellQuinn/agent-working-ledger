@@ -1,0 +1,40 @@
+# Handoff
+
+Active ledger: <path>
+Ledger owner ID: <ledger-owner-id>
+Lifecycle state: <state>
+Last updated: <ISO timestamp>
+
+## Current objective
+
+<one paragraph>
+
+## Current state
+
+<one paragraph>
+
+## Files touched
+
+- <path>: <summary>
+
+## Do next
+
+1. <next action>
+2. <next action>
+
+## Do not redo
+
+- <completed investigation or work>
+
+## Known traps
+
+- <trap>
+
+## Validation status
+
+- <summary>
+
+## Resume command/checks
+
+- <commands or inspections>
+

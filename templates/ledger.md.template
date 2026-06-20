@@ -1,0 +1,85 @@
+# <Task title>
+
+Lifecycle State: Created | Oriented | Planned | Active | Blocked | Ready for Review | Closed | Superseded
+Created: <ISO timestamp>
+Last updated: <ISO timestamp>
+Ledger owner ID: <ledger-owner-id>
+Owner source: session-id | generated-id | user-assigned | wrapper-assigned
+Agent/runtime: <agent/runtime name>
+User objective: <user's requested outcome>
+Ledger scope: <repo-relative path>
+Primary ledger: <repo-relative path>/ledger.md
+Related branch/issue/plan/ledger: <optional>
+
+## Current objective
+
+<Plain-language description of the outcome being pursued.>
+
+## Current state summary
+
+<Short resumption-focused summary of the actual current state.>
+
+## Assumptions
+
+- [Unconfirmed] <assumption>
+- [Confirmed] <assumption>
+- [Invalidated] <assumption>
+- [Superseded] <assumption>
+
+## Progress
+
+- [ ] <granular work item>
+- [ ] <granular work item>
+
+## Active plan
+
+<The current plan, revised as work proceeds.>
+
+## Discoveries
+
+- Observation: <what was discovered>
+  Evidence: <file, command output, test result, evidence path, or concise explanation>
+  Impact: <how this affects the task>
+
+## Decision log
+
+- Decision: <decision made>
+  Rationale: <why>
+  Alternatives considered: <alternatives>
+  Consequences: <what follows from this>
+  Date/Author: <timestamp / agent>
+
+## Validation evidence
+
+- Command/check: <what was run or inspected>
+  Result: Not Run | Failed | Passed | Partially Verified | Stale | Not Applicable
+  Evidence: <short output, observation, or evidence file path>
+  Follow-up: <if needed>
+
+## Blockers and risks
+
+- Blocker/risk: <description>
+  Impact: <why it matters>
+  Next action: <what to do next>
+
+## Next actions
+
+1. <next action>
+2. <next action>
+
+## Recovery notes
+
+To resume safely:
+
+1. Read this ledger.
+2. Inspect these files: <paths>
+3. Run these commands: <commands>
+4. Re-check these assumptions: <assumptions>
+5. Re-run or review this validation: <commands/checks>
+6. Do not redo: <work already completed>
+7. Watch out for: <known traps>
+
+## Outcome / retrospective
+
+<Complete at major milestones and task closeout.>
+

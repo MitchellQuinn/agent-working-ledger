@@ -1,0 +1,26 @@
+# OS and editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Node and package managers
+node_modules/
+dist/
+build/
+coverage/
+
+# Agent task-local ledgers created while using this repo
+working-ledger/
+

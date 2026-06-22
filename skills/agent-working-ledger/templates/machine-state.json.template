@@ -1,0 +1,13 @@
+{
+  "schema_version": "0.3",
+  "ledger_owner_id": "<ledger-owner-id>",
+  "owner_source": "session-id | generated-id | user-assigned | wrapper-assigned",
+  "agent_runtime": "<agent/runtime name>",
+  "lifecycle_state": "Created",
+  "created": "<ISO timestamp>",
+  "last_updated": "<ISO timestamp>",
+  "active_plan_version": 1,
+  "validation_status": "Not Run",
+  "touched_files": [],
+  "evidence_files": []
+}

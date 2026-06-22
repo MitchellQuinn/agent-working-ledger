@@ -20,6 +20,12 @@
 - Added optional `awl new` tooling for creating a fresh ledger scope that passes
   `awl check` immediately and refuses to overwrite existing scopes.
 - Added read-only `awl summarize` and `awl list` commands.
+- Added read-only `awl assets` command for locating packaged release assets.
 - Added bounded mutating `awl close` and `awl supersede` commands for explicitly
   supplied scopes.
+- Added `awl install-claude-code-skill` to materialize a Claude Code-ready
+  project or personal skill directory from the canonical skill and wrapper
+  assets.
+- Bundled templates with the canonical skill package and packaged release
+  assets under `share/agent-working-ledger/`.
 - Added examples, evaluation scenario docs, CI, and release checklist material.

@@ -39,6 +39,9 @@ The helper tool creates `OWNER.md`, `ledger.md`, `evidence/`, and `notes/` and
 refuses to overwrite an existing scope. Use `--handoff` or `--machine-state` to
 create optional sidecars.
 
+If Agent Working Ledger is installed as a package, use `awl assets` to locate
+the installed templates and skill package.
+
 Check or summarize the scope:
 
 ```bash

@@ -19,3 +19,41 @@ jobs:
         run: python -m unittest discover -s tests
       - name: Compile Python files
         run: python -m compileall -q tools tests
+      - name: Build wheel
+        run: |
+          python -m pip install --upgrade pip setuptools wheel
+          python -m pip wheel --no-deps --no-build-isolation . -w dist
+      - name: Inspect wheel assets
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import zipfile
+
+          wheel = next(Path("dist").glob("*.whl"))
+          required = [
+              "share/agent-working-ledger/README.md",
+              "share/agent-working-ledger/spec/SPEC.md",
+              "share/agent-working-ledger/templates/OWNER.md.template",
+              "share/agent-working-ledger/skills/agent-working-ledger/SKILL.md",
+              "share/agent-working-ledger/skills/agent-working-ledger/templates/OWNER.md.template",
+              "share/agent-working-ledger/wrappers/codex/SKILL.md",
+              "share/agent-working-ledger/docs/quickstart.md",
+              "share/agent-working-ledger/examples/README.md",
+              "share/agent-working-ledger/evals/README.md",
+          ]
+          with zipfile.ZipFile(wheel) as archive:
+              names = archive.namelist()
+          missing = [path for path in required if not any(name.endswith(path) for name in names)]
+          if missing:
+              raise SystemExit("Missing wheel asset(s): " + ", ".join(missing))
+          PY
+      - name: Smoke test installed wheel
+        run: |
+          python -m venv "$RUNNER_TEMP/awl-wheel-smoke"
+          . "$RUNNER_TEMP/awl-wheel-smoke/bin/activate"
+          python -m pip install --no-index dist/*.whl
+          awl --version
+          awl assets --format json
+          tmpdir="$(mktemp -d)"
+          awl new "CI wheel smoke" --root "$tmpdir" --owner-id ci-wheel-smoke
+          awl check "$tmpdir/ci-wheel-smoke"

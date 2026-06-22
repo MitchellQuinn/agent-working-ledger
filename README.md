@@ -94,7 +94,7 @@ documents/                   Source specification material
 spec/                        Canonical specification and core model docs
 protocols/                   Operation protocols for ledger lifecycle actions
 templates/                   Reusable ledger file templates
-skills/agent-working-ledger/  Canonical distributable skill package
+skills/agent-working-ledger/  Canonical distributable skill package with bundled templates
 wrappers/                    Runtime-specific wrapper material
 docs/                        User-facing documentation
 examples/                    Example ledger scopes
@@ -137,13 +137,19 @@ This is the canonical description of the ledger schema and behaviour.
 
 ### 2. Install or copy the skill
 
-Copy:
+Copy the whole skill package directory:
 
 ```text
-skills/agent-working-ledger/SKILL.md
+skills/agent-working-ledger/
 ```
 
 into the target agent's skill directory.
+
+When installed as a package, locate the installed release assets with:
+
+```bash
+awl assets
+```
 
 ### 3. Add runtime wrapper material if needed
 
@@ -187,6 +193,8 @@ awl new "OAuth refresh fix" --slug oauth-refresh-fix
 awl check working-ledger/<ledger-owner-id>/
 awl summarize working-ledger/<ledger-owner-id>/
 awl list --root working-ledger
+awl assets
+awl install-claude-code-skill
 ```
 
 See:
@@ -241,6 +249,35 @@ awl list --root working-ledger
 ```
 
 `awl list` is read-only. It lists ledger scopes under the selected root.
+
+### Locate release assets
+
+```bash
+awl assets
+awl assets --format json
+```
+
+`awl assets` is read-only. It prints the release asset root and key subpaths for
+the specification, protocols, templates, skill package, wrappers, documentation,
+examples, and evaluation material.
+
+### Create a Claude Code skill
+
+```bash
+awl install-claude-code-skill
+```
+
+`awl install-claude-code-skill` creates a Claude Code-ready project skill under
+`.claude/skills/agent-working-ledger/` by combining the canonical skill package
+with the Claude Code wrapper. It refuses to overwrite an existing target.
+
+See:
+
+```text
+docs/claude-code-adapter.md
+```
+
+for Claude Code install and smoke-test steps.
 
 ### Close or supersede a scope
 
@@ -328,10 +365,14 @@ Before release, run:
 python -m unittest discover -s tests
 python -m compileall -q tools tests
 python -m tools.awl --version
+python -m tools.awl assets
 python -m tools.awl check <example-scope>
+python -m pip wheel --no-deps --no-build-isolation . -w <wheel-dir>
 ```
 
-Also confirm that runtime wrappers do not redefine the core schema.
+Also confirm that the wheel contains `share/agent-working-ledger/`, that an
+installed wheel can run `awl assets`, `awl new`, and `awl check`, and that
+runtime wrappers do not redefine the core schema.
 
 ## Documentation
 
@@ -339,6 +380,7 @@ Start here:
 
 ```text
 docs/quickstart.md
+docs/assets-command.md
 spec/SPEC.md
 ```
 

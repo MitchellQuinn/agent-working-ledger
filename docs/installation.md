@@ -1,20 +1,44 @@
 # Installation
 
-Agent Working Ledger `0.1.0` includes the core skill, wrapper instructions, and
-optional helper tooling.
+Agent Working Ledger `0.1.0` includes the core skill, wrapper instructions,
+release documentation, templates, examples, evaluation material, and optional
+helper tooling.
 
 The source specification iteration is `v0.3`; optional `machine-state.json`
 files should use `schema_version: "0.3"`.
 
-## Canonical Skill
+## Locate Installed Assets
 
-Copy:
+After installing the package, locate the installed release assets with:
+
+```bash
+awl assets
+```
+
+JSON output is available:
+
+```bash
+awl assets --format json
+```
+
+The installed asset root is:
 
 ```text
-skills/agent-working-ledger/SKILL.md
+share/agent-working-ledger/
+```
+
+## Canonical Skill
+
+Copy the whole skill package directory:
+
+```text
+skills/agent-working-ledger/
 ```
 
 to the skill location expected by the target runtime.
+
+The skill package includes `SKILL.md` and bundled templates under
+`skills/agent-working-ledger/templates/`.
 
 ## Claude Code
 
@@ -25,6 +49,18 @@ Recommended paths:
 ~/.claude/skills/agent-working-ledger/SKILL.md
 ```
 
+Create a Claude Code-ready skill directory from the repository root with:
+
+```bash
+python -m tools.awl install-claude-code-skill
+```
+
+By default this writes:
+
+```text
+.claude/skills/agent-working-ledger/
+```
+
 Use wrapper material from:
 
 ```text
@@ -33,6 +69,9 @@ wrappers/claude-code/
 
 Claude Code should use `claude-code-${CLAUDE_SESSION_ID}` as the owner ID when
 that environment variable is available.
+
+See `docs/claude-code-adapter.md` for personal install targets, Claude Code
+installation notes, and smoke-test steps.
 
 ## Codex
 
@@ -94,6 +133,7 @@ awl new "Task title" --slug task-title
 awl check working-ledger/<ledger-owner-id>/
 awl summarize working-ledger/<ledger-owner-id>/
 awl list --root working-ledger
+awl assets
 ```
 
 `awl new` creates a fresh scope and refuses to overwrite existing scopes.

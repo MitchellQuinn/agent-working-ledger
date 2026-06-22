@@ -348,7 +348,9 @@ agent-working-ledger/
     faq.md
 ```
 
-The `skills/agent-working-ledger/` directory is the canonical distributable skill package.
+The `skills/agent-working-ledger/` directory is the canonical distributable skill
+package. It contains `SKILL.md` plus bundled templates needed by a copied skill
+installation.
 
 The top-level `spec/`, `protocols/`, `templates/`, `wrappers/`, `tools/`, `examples/`, `evals/`, and `docs/` directories support the wider project.
 
@@ -1990,6 +1992,10 @@ agent-working-ledger/
   skills/
     agent-working-ledger/
       SKILL.md
+      templates/
+        OWNER.md.template
+        ledger.md.template
+        handoff.md.template
 
   wrappers/
     claude-code/

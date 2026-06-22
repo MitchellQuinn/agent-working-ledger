@@ -1,0 +1,22 @@
+# Evidence
+
+This directory stores bulky or external evidence for the active working ledger.
+
+Examples:
+
+- Command output
+- Test output
+- Linter or build logs
+- Benchmark results
+- Screenshots
+- Generated diffs
+- Manual inspection notes
+- Generated reports
+- Before/after samples
+
+Record a concise summary in `../ledger.md` and reference evidence files from the
+`Validation evidence`, `Discoveries`, or `Recovery notes` sections.
+
+Do not store secrets, credentials, tokens, private keys, API keys, passwords,
+unnecessary personal data, or sensitive production data here. Redact or
+summarize risky output before saving it.

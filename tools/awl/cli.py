@@ -6,7 +6,9 @@ import sys
 from collections.abc import Sequence
 
 from . import __version__
+from .assets import find_assets, format_assets_text
 from .check import check_scope, format_text
+from .claude_code import ClaudeCodeSkillError, create_claude_code_skill, format_claude_code_skill_text
 from .close import CloseLedgerError, close_ledger, format_close_text
 from .list import format_list_text, list_ledgers
 from .new import NewLedgerError, create_ledger, format_new_text
@@ -22,6 +24,33 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
 
     subparsers = parser.add_subparsers(dest="command", required=True)
+    assets_parser = subparsers.add_parser(
+        "assets",
+        help="Locate installed Agent Working Ledger release assets.",
+    )
+    assets_parser.add_argument(
+        "--format",
+        choices=("text", "json"),
+        default="text",
+        help="Output format. Defaults to text.",
+    )
+
+    claude_code_parser = subparsers.add_parser(
+        "install-claude-code-skill",
+        help="Create a Claude Code skill directory from Agent Working Ledger assets.",
+    )
+    claude_code_parser.add_argument(
+        "--target",
+        default=".claude/skills/agent-working-ledger",
+        help="Destination skill directory. Defaults to .claude/skills/agent-working-ledger.",
+    )
+    claude_code_parser.add_argument(
+        "--format",
+        choices=("text", "json"),
+        default="text",
+        help="Output format. Defaults to text.",
+    )
+
     check_parser = subparsers.add_parser(
         "check",
         help="Read-only validation for a working-ledger scope.",
@@ -150,6 +179,26 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv: Sequence[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
+
+    if args.command == "assets":
+        result = find_assets()
+        if args.format == "json":
+            print(json.dumps(result.as_dict(), indent=2, sort_keys=True))
+        else:
+            print(format_assets_text(result))
+        return 0 if result.exists else 1
+
+    if args.command == "install-claude-code-skill":
+        try:
+            result = create_claude_code_skill(args.target)
+        except ClaudeCodeSkillError as exc:
+            print(f"ERROR: {exc}", file=sys.stderr)
+            return 1
+        if args.format == "json":
+            print(json.dumps(result.as_dict(), indent=2, sort_keys=True))
+        else:
+            print(format_claude_code_skill_text(result))
+        return 0
 
     if args.command == "check":
         result = check_scope(args.scope)

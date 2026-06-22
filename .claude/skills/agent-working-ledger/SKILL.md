@@ -1,7 +1,32 @@
 ---
 name: agent-working-ledger
-description: Use for long-running, multi-step, exploratory, interruptible, validation-heavy, or handoff-prone agentic work. Creates or adopts exactly one task-local working-ledger scope, then maintains a Markdown ledger recording progress, discoveries, decisions, validation evidence, blockers, next actions, and recovery state. Each agent thread must write only to its active ledger scope unless the user explicitly directs it to use an existing one. Do not use for simple one-shot tasks.
+description: Maintain a session-specific working ledger for long-running, multi-step, exploratory, interruptible, validation-heavy, or handoff-prone work. Uses the active Claude Code session ID when available to create or adopt one ledger scope under working-ledger/. Do not write to unrelated ledger scopes unless the user explicitly provides one.
+argument-hint: "[optional-existing-ledger-scope-or-task-title]"
 ---
+
+# Agent Working Ledger For Claude Code
+
+This is the Claude Code adapter for the canonical Agent Working Ledger skill.
+Apply the canonical instructions below with these Claude Code runtime bindings.
+
+## Claude Code Runtime Binding
+
+- Treat `$ARGUMENTS` as either an explicitly supplied existing ledger scope or a
+  human-readable task title. If no argument is supplied, infer the task title
+  from the current user request.
+- Use `claude-code-${CLAUDE_SESSION_ID}` as the ledger owner ID when
+  `${CLAUDE_SESSION_ID}` is available.
+- If a human-readable slug is useful, append it:
+  `claude-code-${CLAUDE_SESSION_ID}-<task-slug>`.
+- If `${CLAUDE_SESSION_ID}` is unavailable, fall back to
+  `<UTC timestamp>-claude-code-<short-random-nonce>`.
+- Bundled templates live under `${CLAUDE_SKILL_DIR}/templates/`.
+- Supporting Claude Code notes are available in
+  `${CLAUDE_SKILL_DIR}/runtime-capabilities.md` and
+  `${CLAUDE_SKILL_DIR}/CLAUDE.md-snippet.md`.
+- Do not treat this adapter as a fork of the core schema. If there is any
+  ambiguity, preserve the canonical Agent Working Ledger schema and apply only
+  the owner-ID and runtime bindings above.
 
 # Agent Working Ledger
 

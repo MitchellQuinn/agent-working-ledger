@@ -13,4 +13,5 @@ python -m tools.awl close working-ledger/<ledger-owner-id>/ \
 
 The command updates `ledger.md` and mirrors lifecycle, timestamp, and validation
 status to `machine-state.json` when that sidecar exists. It must not be used for
-temporary pauses; update recovery notes instead.
+temporary pauses; update recovery notes instead. Its output includes the
+standalone scope ID as well as the updated paths.

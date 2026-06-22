@@ -19,6 +19,7 @@ class CheckScopeTests(unittest.TestCase):
             result = check_scope(scope)
 
             self.assertTrue(result.ok)
+            self.assertEqual(result.scope_id, "valid-scope")
             self.assertEqual(result.findings, ())
 
     def test_missing_required_files_and_directories_are_errors(self) -> None:
@@ -161,11 +162,15 @@ class CheckScopeTests(unittest.TestCase):
     def test_cli_returns_nonzero_for_errors(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             scope = _write_scope(Path(tmp), "invalid-state", lifecycle="Reviewing")
+            stdout = StringIO()
 
-            with redirect_stdout(StringIO()):
+            with redirect_stdout(stdout):
                 exit_code = cli_main(["check", str(scope), "--format", "json"])
 
+            payload = json.loads(stdout.getvalue())
+
             self.assertEqual(exit_code, 1)
+            self.assertEqual(payload["scope_id"], "invalid-state")
 
 
 def _write_scope(

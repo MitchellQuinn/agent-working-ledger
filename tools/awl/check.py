@@ -38,6 +38,7 @@ class Finding:
 
 @dataclass(frozen=True)
 class CheckResult:
+    scope_id: str
     scope: str
     findings: tuple[Finding, ...]
 
@@ -55,6 +56,7 @@ class CheckResult:
 
     def as_dict(self) -> dict[str, Any]:
         return {
+            "scope_id": self.scope_id,
             "scope": self.scope,
             "ok": self.ok,
             "error_count": self.error_count,
@@ -69,6 +71,7 @@ def check_scope(scope: str | Path) -> CheckResult:
 
     if not scope_path.exists():
         return CheckResult(
+            scope_id=scope_path.name,
             scope=str(scope_path),
             findings=(
                 Finding("error", "SCOPE_MISSING", "Ledger scope does not exist.", str(scope_path)),
@@ -77,6 +80,7 @@ def check_scope(scope: str | Path) -> CheckResult:
 
     if not scope_path.is_dir():
         return CheckResult(
+            scope_id=scope_path.name,
             scope=str(scope_path),
             findings=(
                 Finding("error", "SCOPE_NOT_DIRECTORY", "Ledger scope is not a directory.", str(scope_path)),
@@ -156,11 +160,12 @@ def check_scope(scope: str | Path) -> CheckResult:
 
     _check_owner_id_consistency(owner_id_values, findings)
 
-    return CheckResult(scope=str(scope_path), findings=tuple(findings))
+    return CheckResult(scope_id=scope_path.name, scope=str(scope_path), findings=tuple(findings))
 
 
 def format_text(result: CheckResult) -> str:
     lines = [
+        f"Scope ID: {result.scope_id}",
         f"Scope: {result.scope}",
         f"Result: {'OK' if result.ok else 'FAILED'} ({result.error_count} error(s), {result.warning_count} warning(s))",
     ]

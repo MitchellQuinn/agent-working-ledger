@@ -38,6 +38,10 @@ working-ledger/<owner-id>/
   notes/
 ```
 
+When telling the user which ledger is active, include the owner ID as a
+standalone, copyable scope ID. You may also include the full ledger path, but
+the path does not replace the standalone ID.
+
 Optional files are `handoff.md` and `machine-state.json` when useful. Use
 `schema_version: "0.3"` for optional machine state because it tracks the ledger
 schema/spec iteration, not the package release.

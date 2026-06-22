@@ -8,6 +8,7 @@ python -m tools.awl list --root working-ledger
 python -m tools.awl list --root working-ledger --format json
 ```
 
-For each direct child directory, it reports scope path, owner ID, lifecycle
-state, last updated time, objective, and `awl check` status. Malformed scopes are
-listed with their check error counts instead of failing the whole command.
+For each direct child directory, it reports scope path, owner ID (the standalone
+scope ID), lifecycle state, last updated time, objective, and `awl check` status.
+Malformed scopes are listed with their check error counts instead of failing the
+whole command.

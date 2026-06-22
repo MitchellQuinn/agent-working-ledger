@@ -32,7 +32,8 @@ working-ledger/<ledger-owner-id>/
 5. Fill `ledger.md` from [../templates/ledger.md.template](../templates/ledger.md.template).
 6. Optionally add `handoff.md`, `machine-state.json`, or an evidence README
    from the templates when useful.
-7. Record the active scope path in the agent response.
+7. Record the active scope ID as a standalone, copyable fragment in the agent
+   response; also include the active scope path when useful.
 8. Continue writing task state only inside that scope.
 
 The helper tool creates `OWNER.md`, `ledger.md`, `evidence/`, and `notes/` and
@@ -69,16 +70,17 @@ changes, mark it `Stale`.
 2. Read `OWNER.md`.
 3. Read `ledger.md`.
 4. Read `handoff.md` if present.
-5. Check validation freshness, blockers, next actions, and recovery notes.
-6. Repair inconsistencies in the active ledger before continuing.
+5. Reflect the active scope ID as a standalone, copyable fragment.
+6. Check validation freshness, blockers, next actions, and recovery notes.
+7. Repair inconsistencies in the active ledger before continuing.
 
 ## Handoff
 
 1. Update `ledger.md` first.
 2. Create or refresh `handoff.md` when a compressed continuation note is useful.
-3. Include the active ledger path, current objective, current state, files
-   touched, next actions, work not to redo, traps, validation status, and resume
-   checks.
+3. Include the active scope ID as a standalone fragment, the active ledger path,
+   current objective, current state, files touched, next actions, work not to
+   redo, traps, validation status, and resume checks.
 4. Keep `ledger.md` as the authority; the handoff note is only a summary.
 
 ## Close a Ledger

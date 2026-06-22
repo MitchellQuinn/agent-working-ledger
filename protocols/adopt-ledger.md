@@ -26,7 +26,9 @@ ledger scope or a wrapper assigns one.
    blockers, next actions, and recovery notes before making changes.
 6. Check for obvious internal inconsistencies.
 7. Repair only the active ledger if needed and appropriate.
-8. Continue from `Next actions` and `Recovery notes`.
+8. Report the adopted scope ID as a standalone, copyable fragment; also report
+   the scope path when useful.
+9. Continue from `Next actions` and `Recovery notes`.
 
 ## Failure Behaviour
 
@@ -45,6 +47,7 @@ if the user explicitly directed that, or create a new ledger that references it.
 ## Postconditions
 
 - The adopted scope is active.
+- The adopted scope ID has been reflected as a standalone fragment.
 - Current state, next actions, risks, and validation status are understood.
 - Any metadata repair is recorded.
 - Unrelated ledger scopes remain untouched.

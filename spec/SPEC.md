@@ -503,6 +503,10 @@ If the task has a useful human-readable slug, it may be appended:
 20260620T143012Z-generic-agent-a7f3-oauth-refresh-fix
 ```
 
+For user-facing responses, the owner ID is also the standalone scope ID. Agents
+must reflect it as a copyable fragment separate from any ledger path whenever
+they report, adopt, recover, summarize, or hand off an active scope.
+
 The owner ID must be recorded in:
 
 1. The ledger scope path.
@@ -649,7 +653,8 @@ When the skill is invoked and no existing ledger scope is provided:
 7. Create `notes/`.
 8. Optionally create `handoff.md` if a handoff is expected.
 9. Optionally create `machine-state.json` if tooling or wrapper support exists.
-10. Record the scope path in the agent’s response.
+10. Record the scope ID as a standalone copyable fragment in the agent's
+    response; include the scope path too when useful.
 11. Continue work using only that ledger scope for task-state writes.
 
 Creation must leave the ledger in lifecycle state `Created`.
@@ -1027,13 +1032,15 @@ Use when the skill is invoked and no existing active ledger scope is provided.
 7. Create `notes/`.
 8. Optionally create `handoff.md`.
 9. Optionally create `machine-state.json`.
-10. Report the scope path to the user.
+10. Report the scope ID as a standalone copyable fragment to the user; include
+    the scope path too when useful.
 11. Continue using only that scope.
 
 ### Postconditions
 
 * A valid ledger scope exists.
 * Ownership is explicit.
+* The scope ID has been reflected as a standalone fragment.
 * Lifecycle state is `Created`.
 * The ledger contains required sections.
 * The next action is clear.
@@ -1060,7 +1067,8 @@ Use when the user explicitly points the agent at an existing ledger scope.
 4. Summarize current state.
 5. Check for obvious inconsistencies.
 6. Repair only the active ledger if needed.
-7. Continue from `Next actions` and `Recovery notes`.
+7. Report the adopted scope ID as a standalone copyable fragment.
+8. Continue from `Next actions` and `Recovery notes`.
 
 ### Failure behaviour
 
@@ -1071,6 +1079,7 @@ If the ledger is missing required files, report what is missing and repair only 
 ### Postconditions
 
 * The adopted scope is active.
+* The adopted scope ID has been reflected as a standalone fragment.
 * The agent knows current state, next action, risks, and validation status.
 * Any repaired metadata is recorded.
 
@@ -1248,7 +1257,8 @@ Use at the start of a resumed work segment.
 9. Check whether progress overstates completion.
 10. Check whether files mentioned in the ledger still exist.
 11. Check whether files changed unexpectedly.
-12. Repair the active ledger before proceeding if inconsistencies are found.
+12. Reflect the active scope ID as a standalone copyable fragment.
+13. Repair the active ledger before proceeding if inconsistencies are found.
 
 The agent must not repair ledgers outside the active ledger scope unless the user explicitly asks it to audit or repair them.
 
@@ -1263,6 +1273,7 @@ A handoff note should include:
 ```markdown
 # Handoff
 
+Scope ID: <ledger-owner-id>
 Active ledger: <path>
 Ledger owner ID: <ledger-owner-id>
 Lifecycle state: <state>
@@ -1460,7 +1471,8 @@ A subagent should not directly write into the parent agent’s ledger unless exp
 Instead, it should either:
 
 1. Return a summary to the parent agent, which updates the parent ledger.
-2. Maintain its own ledger scope and provide the path to the parent agent.
+2. Maintain its own ledger scope and provide the standalone scope ID and path to
+   the parent agent.
 3. Write a bounded handoff note in its own scope for later review.
 
 If parent and subagent ledgers both exist, the parent ledger may reference the subagent ledger path.
@@ -1667,10 +1679,12 @@ The wrapper should instruct the agent to:
 4. Write only within that active scope.
 5. Maintain `OWNER.md` and `ledger.md`.
 6. Create `evidence/` and `notes/`.
-7. Update the ledger at every checkpoint.
-8. Treat the ledger as the durable task-state authority.
-9. Avoid unrelated ledger scopes unless the user explicitly assigns one.
-10. Distinguish plans, ledgers, evidence, and handoff notes.
+7. Reflect the active scope ID as a standalone copyable fragment in user
+   updates; include the path too when useful.
+8. Update the ledger at every checkpoint.
+9. Treat the ledger as the durable task-state authority.
+10. Avoid unrelated ledger scopes unless the user explicitly assigns one.
+11. Distinguish plans, ledgers, evidence, and handoff notes.
 
 ## 50. Runtime capability documents
 
@@ -1717,6 +1731,7 @@ Inputs:
 
 Outputs:
 
+* standalone scope ID
 * scope path
 * owner marker path
 * primary ledger path

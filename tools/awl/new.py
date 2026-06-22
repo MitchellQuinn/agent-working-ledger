@@ -25,6 +25,7 @@ class NewLedgerError(Exception):
 
 @dataclass(frozen=True)
 class NewLedgerResult:
+    scope_id: str
     scope: str
     owner: str
     ledger: str
@@ -35,6 +36,7 @@ class NewLedgerResult:
 
     def as_dict(self) -> dict[str, str | None]:
         return {
+            "scope_id": self.scope_id,
             "scope": self.scope,
             "owner": self.owner,
             "ledger": self.ledger,
@@ -156,6 +158,7 @@ def create_ledger(
         created_machine_state = str(machine_state_path)
 
     return NewLedgerResult(
+        scope_id=owner_id,
         scope=str(scope_path),
         owner=str(owner_path),
         ledger=str(ledger_path),
@@ -168,6 +171,7 @@ def create_ledger(
 
 def format_new_text(result: NewLedgerResult) -> str:
     lines = [
+        f"Ledger scope ID: {result.scope_id}",
         f"Created ledger scope: {result.scope}",
         f"OWNER.md: {result.owner}",
         f"ledger.md: {result.ledger}",
@@ -357,6 +361,7 @@ Not completed yet. This ledger is newly created and remains open.
 def _handoff_text(*, owner_id: str, created: str, objective: str, scope: Path) -> str:
     return f"""# Handoff
 
+Scope ID: {owner_id}
 Active ledger: {scope}
 Ledger owner ID: {owner_id}
 Lifecycle state: Created

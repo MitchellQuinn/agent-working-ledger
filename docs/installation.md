@@ -136,6 +136,8 @@ awl list --root working-ledger
 awl assets
 ```
 
-`awl new` creates a fresh scope and refuses to overwrite existing scopes.
-`awl check` is read-only. It reports errors and warnings but does not create,
-repair, close, supersede, or otherwise mutate ledger scopes.
+`awl new` creates a fresh scope and refuses to overwrite existing scopes. Scope
+commands report the standalone scope ID separately from any path when they
+reflect a ledger back to the user. `awl check` is read-only. It reports errors
+and warnings but does not create, repair, close, supersede, or otherwise mutate
+ledger scopes.

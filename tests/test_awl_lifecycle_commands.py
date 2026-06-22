@@ -9,9 +9,9 @@ from pathlib import Path
 
 from tools.awl.check import check_scope
 from tools.awl.cli import main as cli_main
-from tools.awl.close import CloseLedgerError, close_ledger
+from tools.awl.close import CloseLedgerError, close_ledger, format_close_text
 from tools.awl.new import create_ledger
-from tools.awl.supersede import SupersedeLedgerError, supersede_ledger
+from tools.awl.supersede import SupersedeLedgerError, format_supersede_text, supersede_ledger
 
 
 class CloseLedgerTests(unittest.TestCase):
@@ -33,6 +33,8 @@ class CloseLedgerTests(unittest.TestCase):
             self.assertIn("Overall validation status: Passed", ledger_text)
             self.assertEqual(state["lifecycle_state"], "Closed")
             self.assertEqual(state["validation_status"], "Passed")
+            self.assertEqual(close_result.scope_id, "close-owner")
+            self.assertIn("Ledger scope ID: close-owner\n", format_close_text(close_result))
             self.assertTrue(check_scope(result.scope).ok)
 
     def test_close_refuses_schema_invalid_scope(self) -> None:
@@ -92,6 +94,7 @@ class CloseLedgerTests(unittest.TestCase):
 
             payload = json.loads(stdout.getvalue())
             self.assertEqual(exit_code, 0)
+            self.assertEqual(payload["scope_id"], "cli-close")
             self.assertEqual(payload["lifecycle_state"], "Closed")
 
 
@@ -111,6 +114,8 @@ class SupersedeLedgerTests(unittest.TestCase):
             self.assertIn("Lifecycle State: Superseded", ledger_text)
             self.assertIn("Superseded by: working-ledger/replacement-owner", ledger_text)
             self.assertEqual(state["lifecycle_state"], "Superseded")
+            self.assertEqual(supersede_result.scope_id, "supersede-owner")
+            self.assertIn("Ledger scope ID: supersede-owner\n", format_supersede_text(supersede_result))
             self.assertTrue(check_scope(result.scope).ok)
 
     def test_supersede_refuses_schema_invalid_scope(self) -> None:

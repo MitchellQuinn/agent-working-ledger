@@ -22,6 +22,9 @@ The default scope path is:
 working-ledger/<ledger-owner-id>/
 ```
 
+The `<ledger-owner-id>` path segment is also the standalone scope ID agents
+should reflect back separately from the path.
+
 The root `working-ledger/` directory is a container, not a shared working-memory
 file.
 
@@ -38,4 +41,3 @@ scope is active for the current work.
 Existing ledgers are discoverable artifacts, not automatically adoptable memory.
 If multiple ledgers exist and the user has not identified one, the agent must
 not guess. It may list candidates and ask the user to choose.
-

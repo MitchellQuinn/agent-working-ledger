@@ -10,6 +10,7 @@ from .markdown import field
 
 @dataclass(frozen=True)
 class LedgerListEntry:
+    scope_id: str
     scope: str
     owner_id: str | None
     lifecycle_state: str | None
@@ -21,6 +22,7 @@ class LedgerListEntry:
 
     def as_dict(self) -> dict[str, Any]:
         return {
+            "scope_id": self.scope_id,
             "scope": self.scope,
             "owner_id": self.owner_id,
             "lifecycle_state": self.lifecycle_state,
@@ -54,6 +56,7 @@ def list_ledgers(root: str | Path = "working-ledger") -> LedgerListResult:
             root=str(root_path),
             entries=(
                 LedgerListEntry(
+                    scope_id=root_path.name,
                     scope=str(root_path),
                     owner_id=None,
                     lifecycle_state=None,
@@ -70,10 +73,12 @@ def list_ledgers(root: str | Path = "working-ledger") -> LedgerListResult:
     for candidate in sorted((path for path in root_path.iterdir() if path.is_dir()), key=lambda path: path.name.lower()):
         check = check_scope(candidate)
         ledger_text = _read_ledger(candidate)
+        owner_id = field(ledger_text, "Ledger owner ID") if ledger_text else None
         entries.append(
             LedgerListEntry(
+                scope_id=owner_id or candidate.name,
                 scope=str(candidate),
-                owner_id=field(ledger_text, "Ledger owner ID") if ledger_text else None,
+                owner_id=owner_id,
                 lifecycle_state=field(ledger_text, "Lifecycle State") if ledger_text else None,
                 last_updated=field(ledger_text, "Last updated") if ledger_text else None,
                 objective=field(ledger_text, "User objective") if ledger_text else None,
@@ -94,6 +99,7 @@ def format_list_text(result: LedgerListResult) -> str:
                 "",
                 entry.scope,
                 f"  Status: {status}",
+                f"  Scope ID: {entry.scope_id}",
                 f"  Owner ID: {entry.owner_id or 'Unknown'}",
                 f"  Lifecycle state: {entry.lifecycle_state or 'Unknown'}",
                 f"  Last updated: {entry.last_updated or 'Unknown'}",

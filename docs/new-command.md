@@ -35,7 +35,7 @@ python -m tools.awl new "OAuth refresh fix" --owner-id codex-session-123
   `--owner-source` is supplied.
 - Requires explicit owner IDs to be safe single path segments.
 - Refuses to overwrite an existing scope.
-- Prints created paths as text or JSON.
+- Prints the standalone `scope_id` and created paths as text or JSON.
 
 ## Invariant
 

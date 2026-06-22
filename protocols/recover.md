@@ -25,7 +25,9 @@ Use this protocol at the start of a resumed work segment.
 9. Check whether progress overstates completion.
 10. Check whether files mentioned in the ledger still exist.
 11. Check whether files changed unexpectedly.
-12. Repair the active ledger before proceeding if inconsistencies are found.
+12. Reflect the active scope ID as a standalone, copyable fragment; also report
+    the scope path when useful.
+13. Repair the active ledger before proceeding if inconsistencies are found.
 
 ## Failure Behaviour
 
@@ -39,5 +41,6 @@ the user to choose. Listing candidates is not adoption.
 
 - The agent understands current objective, progress, validation status,
   blockers, next actions, and recovery notes.
+- The active scope ID has been reflected as a standalone fragment.
 - Any repair is recorded in the active ledger.
 - The active plan is safe to continue or the blocker is explicit.

@@ -13,6 +13,7 @@ class SummarizeError(Exception):
 
 @dataclass(frozen=True)
 class SummaryResult:
+    scope_id: str
     scope: str
     owner_id: str | None
     lifecycle_state: str | None
@@ -28,6 +29,7 @@ class SummaryResult:
 
     def as_dict(self) -> dict[str, Any]:
         return {
+            "scope_id": self.scope_id,
             "scope": self.scope,
             "owner_id": self.owner_id,
             "lifecycle_state": self.lifecycle_state,
@@ -57,10 +59,12 @@ def summarize_scope(scope: str | Path) -> SummaryResult:
 
     ledger_text = ledger_path.read_text(encoding="utf-8")
     handoff_text = handoff_path.read_text(encoding="utf-8") if handoff_path.is_file() else None
+    owner_id = field(ledger_text, "Ledger owner ID")
 
     return SummaryResult(
+        scope_id=owner_id or scope_path.name,
         scope=str(scope_path),
-        owner_id=field(ledger_text, "Ledger owner ID"),
+        owner_id=owner_id,
         lifecycle_state=field(ledger_text, "Lifecycle State"),
         last_updated=field(ledger_text, "Last updated"),
         objective=_prefer_section(ledger_text, "Current objective", field(ledger_text, "User objective") or ""),
@@ -76,6 +80,7 @@ def summarize_scope(scope: str | Path) -> SummaryResult:
 
 def format_summary_text(result: SummaryResult) -> str:
     lines = [
+        f"Scope ID: {result.scope_id}",
         f"Scope: {result.scope}",
         f"Owner ID: {result.owner_id or 'Unknown'}",
         f"Lifecycle state: {result.lifecycle_state or 'Unknown'}",

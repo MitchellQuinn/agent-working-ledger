@@ -1,5 +1,6 @@
 # Handoff
 
+Scope ID: <ledger-owner-id>
 Active ledger: <path>
 Ledger owner ID: <ledger-owner-id>
 Lifecycle state: <state>

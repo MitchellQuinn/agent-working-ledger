@@ -9,6 +9,9 @@ Each Claude Code session must work inside exactly one active ledger scope under
 If the user gives an existing ledger scope, use that. Otherwise create a new
 scope for this session.
 
+Reflect the active scope ID as a standalone, copyable fragment in user updates;
+include the path too when useful.
+
 Do not write to unrelated ledger scopes merely because they exist.
 
 Keep the active ledger updated with progress, discoveries, decisions, validation

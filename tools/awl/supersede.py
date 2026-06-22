@@ -16,6 +16,7 @@ class SupersedeLedgerError(Exception):
 
 @dataclass(frozen=True)
 class SupersedeLedgerResult:
+    scope_id: str
     scope: str
     ledger: str
     superseded_by: str
@@ -24,6 +25,7 @@ class SupersedeLedgerResult:
 
     def as_dict(self) -> dict[str, Any]:
         return {
+            "scope_id": self.scope_id,
             "scope": self.scope,
             "ledger": self.ledger,
             "superseded_by": self.superseded_by,
@@ -111,6 +113,7 @@ Superseded: {timestamp}""",
         updated_machine_state = str(machine_state_path)
 
     return SupersedeLedgerResult(
+        scope_id=scope_path.name,
         scope=str(scope_path),
         ledger=str(ledger_path),
         superseded_by=superseded_by,
@@ -120,6 +123,7 @@ Superseded: {timestamp}""",
 
 def format_supersede_text(result: SupersedeLedgerResult) -> str:
     lines = [
+        f"Ledger scope ID: {result.scope_id}",
         f"Superseded ledger scope: {result.scope}",
         f"Superseded by: {result.superseded_by}",
         f"ledger.md: {result.ledger}",

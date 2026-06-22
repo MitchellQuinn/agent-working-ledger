@@ -84,7 +84,8 @@ Approve file creation if Claude Code asks. Expected result:
 - The scope owner starts with `claude-code-` when `${CLAUDE_SESSION_ID}` is
   available.
 - The scope contains `OWNER.md`, `ledger.md`, `evidence/`, and `notes/`.
-- Claude Code reports the active scope path and continues using only that scope.
+- Claude Code reports the active scope ID as a standalone, copyable fragment,
+  may also report the active scope path, and continues using only that scope.
 
 Validate the generated scope from a normal shell:
 

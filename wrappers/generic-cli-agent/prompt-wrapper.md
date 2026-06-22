@@ -13,10 +13,12 @@ Rules:
 4. Maintain `OWNER.md` and `ledger.md`.
 5. Create `evidence/` and `notes/`.
 6. Write only inside the active ledger scope.
-7. Update the ledger at every meaningful checkpoint.
-8. Treat `ledger.md` as the durable task-state authority.
-9. Do not adopt unrelated scopes unless the user explicitly assigns one.
-10. Distinguish plans, ledgers, evidence, and handoff notes.
+7. Reflect the active scope ID as a standalone, copyable fragment in user
+   updates; include the path too when useful.
+8. Update the ledger at every meaningful checkpoint.
+9. Treat `ledger.md` as the durable task-state authority.
+10. Do not adopt unrelated scopes unless the user explicitly assigns one.
+11. Distinguish plans, ledgers, evidence, and handoff notes.
 
 Use only these validation statuses:
 

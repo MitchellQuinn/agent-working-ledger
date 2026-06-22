@@ -1,7 +1,8 @@
 # Read-Only Checker
 
-`awl check` validates one explicitly supplied ledger scope. It is intentionally
-read-only and must not adopt, repair, close, supersede, or mutate ledgers.
+`awl check` validates one explicitly supplied ledger scope and reports the
+standalone scope ID with the scope path. It is intentionally read-only and must
+not adopt, repair, close, supersede, or mutate ledgers.
 
 Run without installing:
 

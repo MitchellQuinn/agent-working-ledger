@@ -54,6 +54,17 @@ working-ledger/<ledger-owner-id>/
 `ledger.md` is the human-readable authority. Optional machine-readable state only
 mirrors it.
 
+When reflecting an active scope back to the user, always include the ledger
+owner ID as a standalone, copyable scope ID on its own line or fragment, for
+example:
+
+```text
+Active ledger scope ID: 20260622T160623Z-codex-8f3a
+```
+
+You may also include the scope path, but a path alone is not sufficient because
+the scope ID must be easy to paste into another thread.
+
 Bundled templates live under this skill package:
 
 ```text
@@ -74,7 +85,8 @@ When no existing scope is supplied:
 3. Create `OWNER.md` from `templates/OWNER.md.template`.
 4. Create `ledger.md` from `templates/ledger.md.template`.
 5. Create `evidence/` and `notes/`.
-6. Tell the user which scope is active.
+6. Tell the user the active scope ID as a standalone fragment and, if useful,
+   the active scope path.
 7. Continue using only that scope.
 
 Use a runtime session ID when available. Otherwise use:
@@ -90,7 +102,9 @@ When the user provides an existing scope:
 1. Treat that exact scope as active.
 2. Read `OWNER.md`, `ledger.md`, and `handoff.md` if present.
 3. Summarize current state before making changes.
-4. Continue from `Next actions` and `Recovery notes`.
+4. Reflect the adopted scope ID as a standalone fragment, even if also reporting
+   the path.
+5. Continue from `Next actions` and `Recovery notes`.
 
 Do not silently adopt the newest or most plausible existing scope.
 
@@ -163,7 +177,9 @@ At the start of a resumed work segment:
 2. Read `OWNER.md`, `ledger.md`, and `handoff.md` if present.
 3. Check whether lifecycle state, next actions, active plan, progress, files
    mentioned, and validation status still match the repository.
-4. Repair only the active ledger before proceeding if inconsistencies are found.
+4. Reflect the active scope ID as a standalone fragment, even if also reporting
+   the path.
+5. Repair only the active ledger before proceeding if inconsistencies are found.
 
 ## Handoff, Close, And Supersede
 
@@ -182,8 +198,8 @@ continuation should happen.
 
 Each independent subagent, fork, or parallel agent should have its own ledger
 scope unless the user explicitly assigns it to an existing one. A subagent
-should return a summary to the parent, provide its own ledger path, or write a
-bounded handoff note in its own scope.
+should return a summary to the parent, provide its own standalone scope ID and
+ledger path, or write a bounded handoff note in its own scope.
 
 Do not let subagents write into the parent ledger unless explicitly instructed.
 

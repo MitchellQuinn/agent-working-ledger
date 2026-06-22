@@ -136,3 +136,9 @@ include = ["tools*"]
 "share/agent-working-ledger/evals/scenarios" = [
   "evals/scenarios/*.md",
 ]
+"share/agent-working-ledger/evals/templates" = [
+  "evals/templates/*.md",
+]
+"share/agent-working-ledger/evals/runs" = [
+  "evals/runs/*.md",
+]

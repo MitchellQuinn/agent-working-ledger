@@ -34,7 +34,8 @@ active ledger scope was supplied.
 9. Optionally create `machine-state.json`.
 10. Record the current objective, initial assumptions, first progress items,
     active plan or orientation step, next actions, and recovery notes.
-11. Report the active scope path to the user.
+11. Report the active scope ID as a standalone, copyable fragment; also report
+    the active scope path when useful.
 12. Continue using only that scope.
 
 ## Failure Behaviour
@@ -53,4 +54,5 @@ is active until `OWNER.md`, `ledger.md`, `evidence/`, and `notes/` exist.
 - Lifecycle state is `Created`.
 - Required ledger sections exist.
 - The next action is clear.
-- The active scope path is known to the user.
+- The active scope ID is known to the user as a standalone fragment.
+- The active scope path is known to the user when path context is useful.

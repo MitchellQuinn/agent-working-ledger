@@ -10,7 +10,8 @@ The parent agent owns its own active ledger scope. A subagent should usually do
 one of three things:
 
 1. Return a concise summary to the parent, which updates the parent ledger.
-2. Create and maintain its own ledger scope, then provide the path to the parent.
+2. Create and maintain its own ledger scope, then provide the standalone scope
+   ID and path to the parent.
 3. Write a bounded `handoff.md` in its own scope for later review.
 
 A subagent should not directly write into the parent ledger unless explicitly
@@ -44,5 +45,6 @@ For handoff between agents:
 
 1. Update the active `ledger.md`.
 2. Create or refresh `handoff.md` if a compressed summary is useful.
-3. Pass the ledger scope path explicitly to the next agent.
+3. Pass the standalone scope ID and ledger scope path explicitly to the next
+   agent.
 4. The next agent adopts only that supplied scope.

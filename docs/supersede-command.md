@@ -12,4 +12,5 @@ python -m tools.awl supersede working-ledger/<ledger-owner-id>/ \
 
 The command records the replacement target, reason, useful remaining work or
 evidence, and continuation location. It updates `machine-state.json` when that
-sidecar exists.
+sidecar exists. Its output includes the standalone scope ID as well as the
+updated paths.

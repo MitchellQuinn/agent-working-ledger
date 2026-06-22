@@ -38,6 +38,9 @@ ID. Otherwise mint:
 The owner ID must appear in the scope path, `OWNER.md`, `ledger.md`, and optional
 handoff or machine-readable state files when those files exist.
 
+For user-facing copy/paste, the owner ID is also the standalone scope ID. Report
+it separately from any scope path when reflecting an active ledger.
+
 ## File Responsibilities
 
 `OWNER.md` records identity and write permission. It must not contain progress,

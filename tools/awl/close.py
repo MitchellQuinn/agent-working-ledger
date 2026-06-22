@@ -16,6 +16,7 @@ class CloseLedgerError(Exception):
 
 @dataclass(frozen=True)
 class CloseLedgerResult:
+    scope_id: str
     scope: str
     ledger: str
     machine_state: str | None
@@ -23,6 +24,7 @@ class CloseLedgerResult:
 
     def as_dict(self) -> dict[str, Any]:
         return {
+            "scope_id": self.scope_id,
             "scope": self.scope,
             "ledger": self.ledger,
             "machine_state": self.machine_state,
@@ -120,11 +122,17 @@ Closed: {timestamp}""",
         _update_machine_state(machine_state_path, timestamp, "Closed", validation_status)
         updated_machine_state = str(machine_state_path)
 
-    return CloseLedgerResult(scope=str(scope_path), ledger=str(ledger_path), machine_state=updated_machine_state)
+    return CloseLedgerResult(
+        scope_id=scope_path.name,
+        scope=str(scope_path),
+        ledger=str(ledger_path),
+        machine_state=updated_machine_state,
+    )
 
 
 def format_close_text(result: CloseLedgerResult) -> str:
     lines = [
+        f"Ledger scope ID: {result.scope_id}",
         f"Closed ledger scope: {result.scope}",
         f"ledger.md: {result.ledger}",
     ]

@@ -52,6 +52,9 @@ A developer asks an agent to fix a bug.
 awl new "OAuth refresh fix" --slug oauth-refresh-fix
 ````
 
+The helper prints the standalone scope ID separately from the created paths so
+it can be copied into another thread.
+
 The agent creates:
 
 ```text
@@ -216,6 +219,7 @@ awl new "OAuth refresh fix" --slug oauth-refresh-fix
 ```
 
 `awl new` creates a fresh ledger scope and refuses to overwrite existing scopes.
+It reports the standalone scope ID as well as the created paths.
 
 ### Validate a scope
 

@@ -20,6 +20,7 @@ class SummarizeTests(unittest.TestCase):
 
             summary = summarize_scope(result.scope)
 
+            self.assertEqual(summary.scope_id, "summary-owner")
             self.assertEqual(summary.owner_id, "summary-owner")
             self.assertEqual(summary.lifecycle_state, "Created")
             self.assertIn("Summarize task", summary.objective)
@@ -67,6 +68,7 @@ class SummarizeTests(unittest.TestCase):
 
             payload = json.loads(stdout.getvalue())
             self.assertEqual(exit_code, 0)
+            self.assertEqual(payload["scope_id"], "cli-summary")
             self.assertEqual(payload["owner_id"], "cli-summary")
 
     def test_cli_summarize_missing_scope_returns_nonzero(self) -> None:
@@ -105,6 +107,7 @@ class ListTests(unittest.TestCase):
 
             by_name = {Path(entry.scope).name: entry for entry in result.entries}
             self.assertEqual(len(result.entries), 4)
+            self.assertEqual(by_name["active-owner"].scope_id, "active-owner")
             self.assertTrue(by_name["active-owner"].ok)
             self.assertEqual(by_name["closed-owner"].lifecycle_state, "Closed")
             self.assertEqual(by_name["superseded-owner"].lifecycle_state, "Superseded")
@@ -121,6 +124,7 @@ class ListTests(unittest.TestCase):
 
             payload = json.loads(stdout.getvalue())
             self.assertEqual(exit_code, 0)
+            self.assertEqual(payload["entries"][0]["scope_id"], "list-owner")
             self.assertEqual(payload["entries"][0]["owner_id"], "list-owner")
 
 

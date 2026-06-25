@@ -52,6 +52,13 @@ For a personal macOS, Linux, or WSL install:
 python -m tools.awl install-claude-code-skill --target ~/.claude/skills/agent-working-ledger
 ```
 
+## Adapter Status
+
+This repository provides Claude Code wrapper material and an installer that
+creates a Claude Code-ready skill directory. A live Claude Code smoke run should
+be recorded in release notes or a checked smoke-test log before claiming
+end-to-end Claude Code compatibility.
+
 ## Install Claude Code
 
 Install Claude Code using Anthropic's current installer for your platform, then
@@ -61,8 +68,9 @@ start it once and log in:
 claude
 ```
 
-On native Windows, Anthropic recommends Git for Windows so Claude Code can use a
-Bash tool. Without it, Claude Code falls back to PowerShell.
+On native Windows, Claude Code shell behaviour depends on the local shell tools
+available in that environment. Follow Anthropic's current Claude Code
+installation documentation for platform-specific shell requirements.
 
 ## Smoke Test
 

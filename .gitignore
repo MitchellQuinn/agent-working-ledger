@@ -21,6 +21,10 @@ node_modules/
 dist/
 build/
 coverage/
+output/
 
 # Agent task-local ledgers created while using this repo
 working-ledger/
+
+# Local release readiness notes
+docs/release-readiness.md

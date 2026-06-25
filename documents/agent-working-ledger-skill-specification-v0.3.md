@@ -143,7 +143,6 @@ This skill applies to tasks that are:
 * Likely to involve design decisions.
 * Likely to uncover new information during work.
 * Dependent on validation loops.
-* Vulnerable to interruption, context compaction, session loss, or agent handoff.
 * Likely to involve multiple agentic runs, subagents, or future continuation.
 * Broad enough that progress needs to be recoverable from durable state.
 * Risky enough that hidden plan drift would be harmful.

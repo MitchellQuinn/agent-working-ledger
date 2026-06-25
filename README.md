@@ -110,6 +110,11 @@ tests/                       Unit tests for helper tooling
 
 This repository is preparing the `0.1.0` release of Agent Working Ledger.
 
+This is an alpha GitHub release candidate. It is intended to be inspected as a
+small, honest portfolio project with installable helper tooling and documented
+runtime wrapper material. It is not a claim of production adoption or universal
+agent-runtime compatibility.
+
 The source specification is currently on iteration `v0.3`. The specification
 version describes the ledger schema and expected behaviour. It is not the
 package release number.
@@ -343,9 +348,11 @@ Agent Working Ledger is not:
 * a hidden memory system
 * an autonomous project manager
 * a general knowledge base
-* a promise that an agent did the right thing
+* a correctness, compliance, or authorization certification
 
-It is a durable working record for agentic software tasks.
+It is a durable working record for agentic software tasks. A ledger can preserve
+review evidence and decisions, but it does not certify that the work is correct,
+compliant, authorized, or complete.
 
 ## Release boundary
 

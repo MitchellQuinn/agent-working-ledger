@@ -3,6 +3,10 @@
 This document describes wrapper assumptions. It does not redefine the core
 Agent Working Ledger schema or ownership model.
 
+Status for this release: wrapper material and installer support are provided.
+Live Claude Code compatibility should be claimed only after recording a smoke
+run in release notes or a checked smoke-test log.
+
 | Capability | Status |
 | --- | --- |
 | Exposes session/thread ID | Yes, `${CLAUDE_SESSION_ID}` when available. |

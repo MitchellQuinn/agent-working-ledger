@@ -3,6 +3,9 @@
 This document describes wrapper assumptions. It does not redefine the core
 Agent Working Ledger schema or ownership model.
 
+Status for this release: this is generic prompt material for runtimes that can
+read and write project files. Runtime-specific compatibility is not claimed.
+
 | Capability | Status |
 | --- | --- |
 | Exposes session/thread ID | Unknown; use one when the runtime provides it. |

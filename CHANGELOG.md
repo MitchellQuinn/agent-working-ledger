@@ -28,4 +28,8 @@
   assets.
 - Bundled templates with the canonical skill package and packaged release
   assets under `share/agent-working-ledger/`.
-- Added examples, evaluation scenario docs, CI, and release checklist material.
+- Added example ledger scopes under `examples/`.
+- Added manual evaluation scenario docs and rubrics under `evals/`, with the
+  procedure in `docs/manual-evals.md`.
+- Added GitHub Actions CI in `.github/workflows/ci.yml`.
+- Added release asset inspection coverage through CI and `docs/assets-command.md`.

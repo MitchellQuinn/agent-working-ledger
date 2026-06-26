@@ -117,7 +117,7 @@ Total score: 11
 - Commands run:
   - `python -m pytest tests/test_cli.py -k "parse or list or show"`
   - `python -m pytest`
-  - `python -m tools.awl check working-ledger/20260622T093000Z-agent-a-refactor`
+  - `python -m agent_working_ledger check working-ledger/20260622T093000Z-agent-a-refactor`
 - Screenshots, transcripts, or notes:
   - Manual evaluator reviewed the final ledger, handoff note, and diff.
   - No screenshots were required for this CLI-only fixture.

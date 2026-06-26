@@ -79,7 +79,7 @@ def format_assets_text(result: AssetsResult) -> str:
 
 
 def _source_tree_root() -> Path:
-    return Path(__file__).resolve().parents[2]
+    return Path(__file__).resolve().parents[1]
 
 
 def _installed_asset_root() -> Path:
@@ -87,7 +87,7 @@ def _installed_asset_root() -> Path:
 
 
 def _looks_like_asset_root(root: Path) -> bool:
-    return (root / "pyproject.toml").is_file() and (root / "tools" / "awl").is_dir()
+    return (root / "pyproject.toml").is_file() and (root / "agent_working_ledger").is_dir()
 
 
 def _result(root: Path, source: str) -> AssetsResult:
@@ -100,4 +100,3 @@ def _result(root: Path, source: str) -> AssetsResult:
         paths=paths,
         missing=missing,
     )
-

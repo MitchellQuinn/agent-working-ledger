@@ -7,10 +7,10 @@ from contextlib import redirect_stderr, redirect_stdout
 from io import StringIO
 from pathlib import Path
 
-from tools.awl.cli import main as cli_main
-from tools.awl.list import list_ledgers
-from tools.awl.new import create_ledger
-from tools.awl.summarize import SummarizeError, summarize_scope
+from agent_working_ledger.cli import main as cli_main
+from agent_working_ledger.list import list_ledgers
+from agent_working_ledger.new import create_ledger
+from agent_working_ledger.summarize import SummarizeError, summarize_scope
 
 
 class SummarizeTests(unittest.TestCase):

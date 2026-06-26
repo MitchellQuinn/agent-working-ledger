@@ -52,7 +52,7 @@ Recommended paths:
 Create a Claude Code-ready skill directory from the repository root with:
 
 ```bash
-python -m tools.awl install-claude-code-skill
+python -m agent_working_ledger install-claude-code-skill
 ```
 
 By default this writes:
@@ -78,7 +78,7 @@ installation notes, and smoke-test steps.
 Create a Codex-ready user skill directory from the repository root with:
 
 ```bash
-python -m tools.awl install-codex-skill
+python -m agent_working_ledger install-codex-skill
 ```
 
 By default this writes to `$CODEX_HOME/skills/agent-working-ledger/`, or
@@ -87,7 +87,7 @@ By default this writes to `$CODEX_HOME/skills/agent-working-ledger/`, or
 For a repository-scoped Codex skill, pass an explicit target:
 
 ```bash
-python -m tools.awl install-codex-skill --target .agents/skills/agent-working-ledger
+python -m agent_working_ledger install-codex-skill --target .agents/skills/agent-working-ledger
 ```
 
 Codex should use `codex-<session-id>` when a stable Codex session or
@@ -131,13 +131,13 @@ policy locally.
 Create a ledger without installing:
 
 ```bash
-python -m tools.awl new "Task title" --slug task-title
+python -m agent_working_ledger new "Task title" --slug task-title
 ```
 
 Run the checker without installing:
 
 ```bash
-python -m tools.awl check working-ledger/<ledger-owner-id>/
+python -m agent_working_ledger check working-ledger/<ledger-owner-id>/
 ```
 
 Install the package in editable mode to expose the `awl` console script:

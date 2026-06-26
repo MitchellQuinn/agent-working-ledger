@@ -26,7 +26,7 @@ Codex also supports repository-scoped skills from:
 From the repository root:
 
 ```bash
-python -m tools.awl install-codex-skill
+python -m agent_working_ledger install-codex-skill
 ```
 
 By default this writes:
@@ -55,13 +55,13 @@ The command refuses to overwrite an existing target. To write somewhere else,
 pass an explicit target:
 
 ```bash
-python -m tools.awl install-codex-skill --target path/to/agent-working-ledger
+python -m agent_working_ledger install-codex-skill --target path/to/agent-working-ledger
 ```
 
 For a repository-scoped Codex skill:
 
 ```bash
-python -m tools.awl install-codex-skill --target .agents/skills/agent-working-ledger
+python -m agent_working_ledger install-codex-skill --target .agents/skills/agent-working-ledger
 ```
 
 The installer does not append to or rewrite `AGENTS.md`. If project-level
@@ -101,7 +101,7 @@ Approve file creation if Codex asks. Expected result:
 Validate the generated scope from a normal shell:
 
 ```bash
-python -m tools.awl check working-ledger/<ledger-owner-id>
+python -m agent_working_ledger check working-ledger/<ledger-owner-id>
 ```
 
 ## Troubleshooting

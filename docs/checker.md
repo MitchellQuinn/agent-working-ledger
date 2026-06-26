@@ -7,7 +7,7 @@ not adopt, repair, close, supersede, or mutate ledgers.
 Run without installing:
 
 ```bash
-python -m tools.awl check working-ledger/<ledger-owner-id>/
+python -m agent_working_ledger check working-ledger/<ledger-owner-id>/
 ```
 
 Run after installing the package:
@@ -19,7 +19,7 @@ awl check working-ledger/<ledger-owner-id>/
 JSON output is available:
 
 ```bash
-python -m tools.awl check working-ledger/<ledger-owner-id>/ --format json
+python -m agent_working_ledger check working-ledger/<ledger-owner-id>/ --format json
 ```
 
 ## Checks

@@ -6,7 +6,7 @@ normative; the core standard lives under `spec/` and `protocols/`.
 Each example can be checked with:
 
 ```bash
-python -m tools.awl check examples/<example-scope>
+python -m agent_working_ledger check examples/<example-scope>
 ```
 
 The parallel example contains two independent scopes to demonstrate parent and

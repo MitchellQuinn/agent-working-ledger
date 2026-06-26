@@ -404,5 +404,5 @@ Ledger scope has been created. No task work has been performed yet.
 
 ## Resume command/checks
 
-- Run `awl check {scope}` or `python -m tools.awl check {scope}`.
+- Run `awl check {scope}` or `python -m agent_working_ledger check {scope}`.
 """

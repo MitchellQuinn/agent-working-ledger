@@ -303,18 +303,16 @@ agent-working-ledger/
       prompt-wrapper.md
       runtime-capabilities.md
 
-  tools/
-    awl/
-      __init__.py
-      cli.py
-      create.py
-      check.py
-      summarize.py
-      close.py
-      list.py
-      models.py
-      markdown.py
-      paths.py
+  agent_working_ledger/
+    __init__.py
+    cli.py
+    new.py
+    check.py
+    summarize.py
+    close.py
+    list.py
+    markdown.py
+    assets.py
 
   examples/
     feature-implementation/
@@ -351,7 +349,7 @@ The `skills/agent-working-ledger/` directory is the canonical distributable skil
 package. It contains `SKILL.md` plus bundled templates needed by a copied skill
 installation.
 
-The top-level `spec/`, `protocols/`, `templates/`, `wrappers/`, `tools/`, `examples/`, `evals/`, and `docs/` directories support the wider project.
+The top-level `spec/`, `protocols/`, `templates/`, `wrappers/`, `agent_working_ledger/`, `examples/`, `evals/`, and `docs/` directories support the wider project.
 
 ## 13. Skill metadata
 

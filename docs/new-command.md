@@ -6,7 +6,7 @@ it does not adopt, repair, close, supersede, or inspect unrelated ledgers.
 Run without installing:
 
 ```bash
-python -m tools.awl new "Task title"
+python -m agent_working_ledger new "Task title"
 ```
 
 Run after installing the package:
@@ -18,11 +18,11 @@ awl new "Task title"
 Useful options:
 
 ```bash
-python -m tools.awl new "OAuth refresh fix" --slug oauth-refresh-fix
-python -m tools.awl new "OAuth refresh fix" --runtime codex
-python -m tools.awl new "OAuth refresh fix" --root working-ledger
-python -m tools.awl new "OAuth refresh fix" --handoff --machine-state
-python -m tools.awl new "OAuth refresh fix" --owner-id codex-session-123
+python -m agent_working_ledger new "OAuth refresh fix" --slug oauth-refresh-fix
+python -m agent_working_ledger new "OAuth refresh fix" --runtime codex
+python -m agent_working_ledger new "OAuth refresh fix" --root working-ledger
+python -m agent_working_ledger new "OAuth refresh fix" --handoff --machine-state
+python -m agent_working_ledger new "OAuth refresh fix" --owner-id codex-session-123
 ```
 
 ## Behavior
@@ -42,5 +42,5 @@ python -m tools.awl new "OAuth refresh fix" --owner-id codex-session-123
 A scope created by `awl new` should pass:
 
 ```bash
-python -m tools.awl check working-ledger/<ledger-owner-id>/
+python -m agent_working_ledger check working-ledger/<ledger-owner-id>/
 ```

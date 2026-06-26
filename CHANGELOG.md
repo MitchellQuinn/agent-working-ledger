@@ -23,6 +23,8 @@
 - Added read-only `awl assets` command for locating packaged release assets.
 - Added bounded mutating `awl close` and `awl supersede` commands for explicitly
   supplied scopes.
+- Packaged the helper CLI under the project-specific `agent_working_ledger`
+  Python namespace instead of a generic `tools` namespace.
 - Added `awl install-claude-code-skill` to materialize a Claude Code-ready
   project or personal skill directory from the canonical skill and wrapper
   assets.

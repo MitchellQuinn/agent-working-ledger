@@ -8,9 +8,9 @@ from datetime import UTC, datetime
 from io import StringIO
 from pathlib import Path
 
-from tools.awl.check import check_scope
-from tools.awl.cli import main as cli_main
-from tools.awl.new import NewLedgerError, create_ledger, format_new_text
+from agent_working_ledger.check import check_scope
+from agent_working_ledger.cli import main as cli_main
+from agent_working_ledger.new import NewLedgerError, create_ledger, format_new_text
 
 
 class NewLedgerTests(unittest.TestCase):

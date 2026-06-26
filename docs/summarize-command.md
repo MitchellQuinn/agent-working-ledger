@@ -5,8 +5,8 @@ continuation summary. It does not adopt, repair, close, supersede, or mutate
 ledgers.
 
 ```bash
-python -m tools.awl summarize working-ledger/<ledger-owner-id>/
-python -m tools.awl summarize working-ledger/<ledger-owner-id>/ --format json
+python -m agent_working_ledger summarize working-ledger/<ledger-owner-id>/
+python -m agent_working_ledger summarize working-ledger/<ledger-owner-id>/ --format json
 ```
 
 The summary includes owner ID (the standalone scope ID), lifecycle state, last

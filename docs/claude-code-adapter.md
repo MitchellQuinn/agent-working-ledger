@@ -20,7 +20,7 @@ and personal skills from:
 From the repository root:
 
 ```bash
-python -m tools.awl install-claude-code-skill
+python -m agent_working_ledger install-claude-code-skill
 ```
 
 This creates:
@@ -37,19 +37,19 @@ The command refuses to overwrite an existing target. To write somewhere else,
 pass an explicit target:
 
 ```bash
-python -m tools.awl install-claude-code-skill --target path/to/agent-working-ledger
+python -m agent_working_ledger install-claude-code-skill --target path/to/agent-working-ledger
 ```
 
 For a personal Windows PowerShell install:
 
 ```powershell
-python -m tools.awl install-claude-code-skill --target "$HOME\.claude\skills\agent-working-ledger"
+python -m agent_working_ledger install-claude-code-skill --target "$HOME\.claude\skills\agent-working-ledger"
 ```
 
 For a personal macOS, Linux, or WSL install:
 
 ```bash
-python -m tools.awl install-claude-code-skill --target ~/.claude/skills/agent-working-ledger
+python -m agent_working_ledger install-claude-code-skill --target ~/.claude/skills/agent-working-ledger
 ```
 
 ## Adapter Status
@@ -98,7 +98,7 @@ Approve file creation if Claude Code asks. Expected result:
 Validate the generated scope from a normal shell:
 
 ```bash
-python -m tools.awl check working-ledger/<ledger-owner-id>
+python -m agent_working_ledger check working-ledger/<ledger-owner-id>
 ```
 
 ## Troubleshooting

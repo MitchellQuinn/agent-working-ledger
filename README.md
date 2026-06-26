@@ -104,7 +104,7 @@ wrappers/                    Runtime-specific wrapper material
 docs/                        User-facing documentation
 examples/                    Example ledger scopes
 evals/                       Evaluation scenarios and rubrics
-tools/awl/                   Optional helper tooling
+agent_working_ledger/        Optional helper tooling package
 tests/                       Unit tests for helper tooling
 ```
 
@@ -179,21 +179,21 @@ redefine the core schema.
 From the repository root:
 
 ```bash
-python -m tools.awl new "OAuth refresh fix" --slug oauth-refresh-fix
+python -m agent_working_ledger new "OAuth refresh fix" --slug oauth-refresh-fix
 ```
 
 Create optional sidecars at creation time:
 
 ```bash
-python -m tools.awl new "OAuth refresh fix" --handoff --machine-state
+python -m agent_working_ledger new "OAuth refresh fix" --handoff --machine-state
 ```
 
 ### 5. Check or summarise a ledger scope
 
 ```bash
-python -m tools.awl check working-ledger/<ledger-owner-id>/
-python -m tools.awl summarize working-ledger/<ledger-owner-id>/
-python -m tools.awl list --root working-ledger
+python -m agent_working_ledger check working-ledger/<ledger-owner-id>/
+python -m agent_working_ledger summarize working-ledger/<ledger-owner-id>/
+python -m agent_working_ledger list --root working-ledger
 ```
 
 When installed as a package, the console script is:
@@ -410,12 +410,15 @@ remains the authority.
 
 Before release, run:
 
+Build wheels from a clean checkout, or remove ignored `build/`, `dist/`, and
+`*.egg-info/` artifacts first.
+
 ```bash
 python -m unittest discover -s tests
-python -m compileall -q tools tests
-python -m tools.awl --version
-python -m tools.awl assets
-python -m tools.awl check <example-scope>
+python -m compileall -q agent_working_ledger tests
+python -m agent_working_ledger --version
+python -m agent_working_ledger assets
+python -m agent_working_ledger check <example-scope>
 python -m pip wheel --no-deps --no-build-isolation . -w <wheel-dir>
 ```
 

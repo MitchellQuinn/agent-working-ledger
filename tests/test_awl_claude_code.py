@@ -7,8 +7,8 @@ from contextlib import redirect_stderr, redirect_stdout
 from io import StringIO
 from pathlib import Path
 
-from tools.awl.claude_code import ClaudeCodeSkillError, create_claude_code_skill
-from tools.awl.cli import main as cli_main
+from agent_working_ledger.claude_code import ClaudeCodeSkillError, create_claude_code_skill
+from agent_working_ledger.cli import main as cli_main
 
 
 class ClaudeCodeSkillTests(unittest.TestCase):

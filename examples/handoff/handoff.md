@@ -36,4 +36,4 @@ Implementation is blocked on a missing environment detail.
 
 ## Resume command/checks
 
-- `python -m tools.awl check examples/handoff`
+- `python -m agent_working_ledger check examples/handoff`

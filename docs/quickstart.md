@@ -11,7 +11,7 @@ source specification iteration `v0.3`.
 Using the helper tool:
 
 ```bash
-python -m tools.awl new "Task title" --slug task-title
+python -m agent_working_ledger new "Task title" --slug task-title
 ```
 
 Using only the templates:
@@ -46,8 +46,8 @@ the installed templates and skill package.
 Check or summarize the scope:
 
 ```bash
-python -m tools.awl check working-ledger/<ledger-owner-id>/
-python -m tools.awl summarize working-ledger/<ledger-owner-id>/
+python -m agent_working_ledger check working-ledger/<ledger-owner-id>/
+python -m agent_working_ledger summarize working-ledger/<ledger-owner-id>/
 ```
 
 ## Work The Ledger
@@ -95,7 +95,7 @@ update recovery notes and leave the lifecycle state accurate.
 The helper command can close an explicit scope:
 
 ```bash
-python -m tools.awl close working-ledger/<ledger-owner-id>/ \
+python -m agent_working_ledger close working-ledger/<ledger-owner-id>/ \
   --outcome "Task complete." \
   --validation-status Passed \
   --remaining-risks "None known." \

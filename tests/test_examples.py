@@ -3,7 +3,7 @@ from __future__ import annotations
 import unittest
 from pathlib import Path
 
-from tools.awl.check import check_scope
+from agent_working_ledger.check import check_scope
 
 
 class ExampleLedgerTests(unittest.TestCase):

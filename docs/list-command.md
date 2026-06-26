@@ -4,8 +4,8 @@
 adopting or selecting one.
 
 ```bash
-python -m tools.awl list --root working-ledger
-python -m tools.awl list --root working-ledger --format json
+python -m agent_working_ledger list --root working-ledger
+python -m agent_working_ledger list --root working-ledger --format json
 ```
 
 For each direct child directory, it reports scope path, owner ID (the standalone

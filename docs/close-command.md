@@ -4,7 +4,7 @@
 schema-invalid ledger and updates only that scope.
 
 ```bash
-python -m tools.awl close working-ledger/<ledger-owner-id>/ \
+python -m agent_working_ledger close working-ledger/<ledger-owner-id>/ \
   --outcome "Implementation complete." \
   --validation-status Passed \
   --remaining-risks "None known." \

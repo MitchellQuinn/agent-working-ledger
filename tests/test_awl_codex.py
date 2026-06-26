@@ -8,8 +8,8 @@ from io import StringIO
 from pathlib import Path
 from unittest.mock import patch
 
-from tools.awl.cli import main as cli_main
-from tools.awl.codex import CodexSkillError, create_codex_skill, format_codex_skill_text
+from agent_working_ledger.cli import main as cli_main
+from agent_working_ledger.codex import CodexSkillError, create_codex_skill, format_codex_skill_text
 
 
 class CodexSkillTests(unittest.TestCase):
@@ -83,7 +83,7 @@ class CodexSkillTests(unittest.TestCase):
 
             with (
                 patch.dict("os.environ", {}, clear=True),
-                patch("tools.awl.codex.Path.home", return_value=home),
+                patch("agent_working_ledger.codex.Path.home", return_value=home),
             ):
                 result = create_codex_skill()
 

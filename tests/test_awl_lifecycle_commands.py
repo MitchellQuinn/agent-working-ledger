@@ -7,11 +7,11 @@ from contextlib import redirect_stderr, redirect_stdout
 from io import StringIO
 from pathlib import Path
 
-from tools.awl.check import check_scope
-from tools.awl.cli import main as cli_main
-from tools.awl.close import CloseLedgerError, close_ledger, format_close_text
-from tools.awl.new import create_ledger
-from tools.awl.supersede import SupersedeLedgerError, format_supersede_text, supersede_ledger
+from agent_working_ledger.check import check_scope
+from agent_working_ledger.cli import main as cli_main
+from agent_working_ledger.close import CloseLedgerError, close_ledger, format_close_text
+from agent_working_ledger.new import create_ledger
+from agent_working_ledger.supersede import SupersedeLedgerError, format_supersede_text, supersede_ledger
 
 
 class CloseLedgerTests(unittest.TestCase):

@@ -6,7 +6,7 @@ current CLI.
 Run from a source checkout:
 
 ```bash
-python -m tools.awl assets
+python -m agent_working_ledger assets
 ```
 
 Run after installing the package:

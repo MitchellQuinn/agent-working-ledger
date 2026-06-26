@@ -35,10 +35,10 @@ Issues = "https://github.com/MitchellQuinn/agent-working-ledger/issues"
 Documentation = "https://github.com/MitchellQuinn/agent-working-ledger#readme"
 
 [project.scripts]
-awl = "tools.awl.cli:main"
+awl = "agent_working_ledger.cli:main"
 
 [tool.setuptools.packages.find]
-include = ["tools*"]
+include = ["agent_working_ledger*"]
 
 [tool.setuptools.data-files]
 "share/agent-working-ledger" = [

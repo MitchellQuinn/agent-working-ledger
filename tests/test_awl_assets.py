@@ -8,7 +8,7 @@ from io import StringIO
 from pathlib import Path
 from unittest.mock import patch
 
-from tools.awl.cli import main as cli_main
+from agent_working_ledger.cli import main as cli_main
 
 
 class AssetsCommandTests(unittest.TestCase):
@@ -34,8 +34,8 @@ class AssetsCommandTests(unittest.TestCase):
             stdout = StringIO()
 
             with (
-                patch("tools.awl.assets._source_tree_root", return_value=Path(tmp) / "not-source"),
-                patch("tools.awl.assets._installed_asset_root", return_value=missing_root),
+                patch("agent_working_ledger.assets._source_tree_root", return_value=Path(tmp) / "not-source"),
+                patch("agent_working_ledger.assets._installed_asset_root", return_value=missing_root),
                 redirect_stdout(stdout),
             ):
                 exit_code = cli_main(["assets", "--format", "json"])

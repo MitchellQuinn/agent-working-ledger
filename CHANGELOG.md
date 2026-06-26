@@ -2,8 +2,8 @@
 
 ## 0.1.0 - 2026-06-26
 
-- Preparing the first Agent Working Ledger release from source specification
-  iteration `v0.3`.
+- Released Agent Working Ledger as a public alpha `0.1.0` source release from
+  source specification iteration `v0.3`.
 - Added the canonical standard at `spec/SPEC.md` plus focused reference docs for
   invariants, ownership, lifecycle, ledger scopes, validation/evidence, and
   security/privacy.

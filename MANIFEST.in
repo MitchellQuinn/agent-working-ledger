@@ -15,6 +15,7 @@ include docs/manual-evals.md
 include docs/multi-agent-use.md
 include docs/new-command.md
 include docs/quickstart.md
+include docs/release-checklist.md
 include docs/summarize-command.md
 include docs/supersede-command.md
 include documents/agent-working-ledger-skill-specification-v0.3.md

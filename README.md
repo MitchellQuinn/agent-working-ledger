@@ -12,17 +12,74 @@ were made, what evidence exists, what is blocked, and what should happen next.
 It is not a planner, issue tracker, test runner, or source-control replacement.
 It is task-local execution state for agentic software work.
 
+## Status
+
+Agent Working Ledger is a public alpha `v0.1.0` source release: usable,
+documented, and tested, but intentionally conservative in scope.
+
+It is intended to be inspected as a small, honest portfolio project with
+installable helper tooling and documented runtime wrapper material. It does not
+claim production adoption, PyPI publication, or universal agent-runtime
+compatibility.
+
+The source specification is currently on iteration `v0.3`. The specification
+version describes the ledger schema and expected behaviour. It is not the
+package release number.
+
+Manual GitHub tag and Release creation are tracked in
+`docs/release-checklist.md`.
+
+## Quick start
+
+Install from source:
+
+```bash
+python -m pip install git+https://github.com/MitchellQuinn/agent-working-ledger.git
+```
+
+Create a task-local scope with the optional continuation sidecars, then inspect
+it:
+
+```bash
+awl new "OAuth refresh fix" --owner-id oauth-refresh-fix --handoff --machine-state
+awl check working-ledger/oauth-refresh-fix
+awl summarize working-ledger/oauth-refresh-fix
+```
+
+That creates:
+
+```text
+working-ledger/oauth-refresh-fix/
+  OWNER.md
+  ledger.md
+  handoff.md
+  machine-state.json
+  evidence/
+  notes/
+```
+
+`OWNER.md` identifies the task scope and owning agent/session. `ledger.md`
+records actual progress, decisions, evidence, blockers, validation, and recovery
+notes. `handoff.md` gives the next agent or person enough state to continue.
+`machine-state.json` mirrors structured continuation state; the Markdown ledger
+remains the authority.
+
+> Generated ledgers may contain private paths, debugging notes, snippets,
+> decisions, and handoff context. `working-ledger/` is ignored by default;
+> review carefully before committing any ledger content.
+
+See `docs/quickstart.md` for the fuller create, resume, handoff, and closeout
+workflow. See `spec/SPEC.md` for the canonical behavior.
+
 ## Why this exists
 
-AI coding agents are becoming useful for multi-step software work, but their
-working state is fragile.
+Agentic coding work often fails at the boundaries: context resets, agent
+handoffs, stale assumptions, and unclear validation state. Evidence and
+decisions get scattered across chat, commits, logs, and memory.
 
-Plans live in chat history. Decisions get buried. Validation evidence
-disappears. A task can be half-finished, the session can end, and the next agent
-has to reconstruct the work from scratch.
-
-Agent Working Ledger makes that state explicit, durable, inspectable, and
-portable between agent sessions.
+Agent Working Ledger gives each substantial task a small, explicit,
+human-readable record of actual work, evidence, blockers, and continuation
+state.
 
 Use it when you want an agent to leave behind a clear record of:
 
@@ -33,6 +90,47 @@ Use it when you want an agent to leave behind a clear record of:
 - what validation evidence exists
 - what is blocked
 - what the next agent or human should do
+
+## When not to use this
+
+Creating no ledger is the default. Ledgers are for work where context loss,
+handoff, auditability, safety, or validation drift would matter.
+
+Do not create a ledger for:
+
+- simple Q&A
+- tiny one-shot edits
+- trivial refactors
+- work where the ledger would be longer than the work
+- exploratory thoughts that are not yet a task
+- anything that would tempt the agent to record guesses as progress
+
+Use a ledger when:
+
+- work spans multiple steps or sessions
+- another agent or person may need to continue
+- evidence, blockers, validation, or decisions need to survive context loss
+- stale or aspirational progress would be harmful
+
+## What this is / is not
+
+Agent Working Ledger is:
+
+- a task-local continuity record
+- human-readable and agent-readable
+- evidence-oriented
+- explicit about ownership, scope, blockers, and validation
+- safe to close, abandon, or supersede
+- designed to help future agents avoid treating stale state as truth
+
+Agent Working Ledger is not:
+
+- a planner
+- a project-management system
+- hidden long-term memory
+- a cryptographic execution log
+- a replacement for commits, tests, issues, or review
+- a place to record guesses as completed work
 
 ## The core idea
 
@@ -46,37 +144,44 @@ automatically adoptable memory.
 
 The human-readable `ledger.md` remains the authority.
 
-## Example workflow
+## Example ledger excerpt
 
-A developer asks an agent to fix a bug.
-
-```bash
-awl new "OAuth refresh fix" --slug oauth-refresh-fix
-```
-
-The helper prints the standalone scope ID separately from the created paths so
-it can be copied into another thread.
-
-The agent creates:
+A committed illustrative example in `examples/feature-implementation/ledger.md`
+shows the shape of the artifact:
 
 ```text
-working-ledger/oauth-refresh-fix/
+# Feature Implementation Example
+
+Ledger scope: examples/feature-implementation
+Lifecycle State: Ready for Review
+
+## Progress
+
+- [x] Inspect existing feature entry point.
+- [x] Implement the requested behavior.
+- [x] Run targeted validation.
+- [ ] Reviewer acceptance.
+
+## Validation evidence
+
+- Command/check: `python -m unittest discover -s tests`
+  Result: Passed
+  Evidence: See `evidence/test-run.txt`.
+  Follow-up: Reviewer may run broader integration checks.
+
+Overall validation status: Passed
+
+## Blockers and risks
+
+- Blocker/risk: Broader integration path was not exercised.
+  Impact: Review should confirm the full workflow.
+  Next action: Run integration checks if review requests them.
+
+## Next actions
+
+1. Reviewer inspects the implementation.
+2. Run broader checks if requested.
 ```
-
-During the task, the agent records progress, discoveries, decisions, validation
-evidence, blockers, and next actions.
-
-Later, the session ends.
-
-A new agent or human can inspect the ledger:
-
-```bash
-awl summarize working-ledger/oauth-refresh-fix/
-awl check working-ledger/oauth-refresh-fix/
-```
-
-The next worker can resume from the recorded state instead of guessing what
-happened.
 
 ## What Agent Working Ledger provides
 
@@ -108,32 +213,7 @@ agent_working_ledger/        Optional helper tooling package
 tests/                       Unit tests for helper tooling
 ```
 
-## Status
-
-This repository is preparing the `0.1.0` release of Agent Working Ledger.
-
-This is an alpha GitHub release candidate. It is intended to be inspected as a
-small, honest portfolio project with installable helper tooling and documented
-runtime wrapper material. It is not a claim of production adoption or universal
-agent-runtime compatibility.
-
-The source specification is currently on iteration `v0.3`. The specification
-version describes the ledger schema and expected behaviour. It is not the
-package release number.
-
-The `0.1.0` release proves the core architecture with:
-
-* specification docs
-* operation protocols
-* ledger templates
-* the canonical skill package
-* thin runtime wrappers
-* practical documentation
-* example ledger scopes
-* small optional helper tooling
-* tests for the helper tooling
-
-## Quick start
+## Detailed setup
 
 ### 1. Read the specification
 
@@ -179,13 +259,13 @@ redefine the core schema.
 From the repository root:
 
 ```bash
-python -m agent_working_ledger new "OAuth refresh fix" --slug oauth-refresh-fix
+python -m agent_working_ledger new "OAuth refresh fix" --owner-id oauth-refresh-fix
 ```
 
-Create optional sidecars at creation time:
+Alternatively, create optional sidecars at creation time:
 
 ```bash
-python -m agent_working_ledger new "OAuth refresh fix" --handoff --machine-state
+python -m agent_working_ledger new "OAuth refresh fix" --owner-id oauth-refresh-fix --handoff --machine-state
 ```
 
 ### 5. Check or summarise a ledger scope
@@ -199,7 +279,7 @@ python -m agent_working_ledger list --root working-ledger
 When installed as a package, the console script is:
 
 ```bash
-awl new "OAuth refresh fix" --slug oauth-refresh-fix
+awl new "OAuth refresh fix" --owner-id oauth-refresh-fix
 awl check working-ledger/<ledger-owner-id>/
 awl summarize working-ledger/<ledger-owner-id>/
 awl list --root working-ledger
@@ -227,7 +307,9 @@ awl new "OAuth refresh fix" --slug oauth-refresh-fix
 ```
 
 `awl new` creates a fresh ledger scope and refuses to overwrite existing scopes.
-It reports the standalone scope ID as well as the created paths.
+It reports the standalone scope ID as well as the created paths. Use
+`--owner-id` when you need a deterministic scope path, or `--slug` when you want
+the generated timestamp/runtime/nonce ID to include a readable suffix.
 
 ### Validate a scope
 
@@ -368,23 +450,6 @@ so future work can be grounded in what actually happened.
 The core specification should remain stable across agent runtimes. Wrappers
 exist only to adapt the skill to specific environments.
 
-## What this is not
-
-Agent Working Ledger is not:
-
-* a replacement for source control
-* a replacement for tests
-* a replacement for issue trackers
-* a replacement for planning
-* a hidden memory system
-* an autonomous project manager
-* a general knowledge base
-* a correctness, compliance, or authorization certification
-
-It is a durable working record for agentic software tasks. A ledger can preserve
-review evidence and decisions, but it does not certify that the work is correct,
-compliant, authorized, or complete.
-
 ## Release boundary
 
 The `0.1.0` release ships bounded Claude Code and Codex skill materializers:
@@ -410,18 +475,19 @@ remains the authority.
 
 ## Validation
 
-Before release, run:
+For release validation, use `docs/release-checklist.md`. Core local checks
+include:
 
 Build wheels from a clean checkout, or remove ignored `build/`, `dist/`, and
 `*.egg-info/` artifacts first.
 
 ```bash
-python -m unittest discover -s tests
+python -m pytest
 python -m compileall -q agent_working_ledger tests
 python -m agent_working_ledger --version
 python -m agent_working_ledger assets
 python -m agent_working_ledger check <example-scope>
-python -m pip wheel --no-deps --no-build-isolation . -w <wheel-dir>
+python -m build
 ```
 
 Also confirm that the wheel contains `share/agent-working-ledger/`, that an

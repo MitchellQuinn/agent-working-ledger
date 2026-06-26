@@ -3,7 +3,7 @@
 Use Agent Working Ledger for work that may need to be resumed, reviewed, audited,
 or handed off.
 
-This repository is preparing package release `0.1.0`. The ledger schema follows
+Agent Working Ledger is at package release `0.1.0`. The ledger schema follows
 source specification iteration `v0.3`.
 
 ## Create a New Ledger

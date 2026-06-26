@@ -3,9 +3,9 @@
 This document describes wrapper assumptions. It does not redefine the core
 Agent Working Ledger schema or ownership model.
 
-Status for this release: wrapper material is provided as project-instruction
-guidance. End-to-end Codex compatibility is not claimed unless a smoke run is
-recorded in release notes or a checked smoke-test log.
+Status for this release: wrapper material and installer support are provided.
+Live Codex compatibility should be claimed only after recording a smoke run in
+release notes or a checked smoke-test log.
 
 | Capability | Status |
 | --- | --- |

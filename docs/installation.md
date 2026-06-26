@@ -75,18 +75,33 @@ installation notes, and smoke-test steps.
 
 ## Codex
 
-Use wrapper material from:
+Create a Codex-ready user skill directory from the repository root with:
 
-```text
-wrappers/codex/
+```bash
+python -m tools.awl install-codex-skill
 ```
 
-Codex should use a stable Codex session or conversation ID when one is available.
-Otherwise it should mint:
+By default this writes to `$CODEX_HOME/skills/agent-working-ledger/`, or
+`~/.codex/skills/agent-working-ledger/` when `CODEX_HOME` is unset.
+
+For a repository-scoped Codex skill, pass an explicit target:
+
+```bash
+python -m tools.awl install-codex-skill --target .agents/skills/agent-working-ledger
+```
+
+Codex should use `codex-<session-id>` when a stable Codex session or
+conversation ID is available. Otherwise it should mint:
 
 ```text
 <UTC timestamp>-codex-<short-random-nonce>
 ```
+
+The installer copies `wrappers/codex/AGENTS.md-snippet.md` for reference but
+does not modify `AGENTS.md`.
+
+See `docs/codex-adapter.md` for install, invocation, smoke-test, and
+troubleshooting steps.
 
 ## Generic CLI Agents
 
@@ -134,6 +149,8 @@ awl check working-ledger/<ledger-owner-id>/
 awl summarize working-ledger/<ledger-owner-id>/
 awl list --root working-ledger
 awl assets
+awl install-claude-code-skill
+awl install-codex-skill
 ```
 
 `awl new` creates a fresh scope and refuses to overwrite existing scopes. Scope

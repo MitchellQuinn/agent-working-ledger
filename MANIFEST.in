@@ -6,6 +6,7 @@ include docs/anti-patterns.md
 include docs/assets-command.md
 include docs/checker.md
 include docs/claude-code-adapter.md
+include docs/codex-adapter.md
 include docs/close-command.md
 include docs/comparison-with-plans.md
 include docs/installation.md
@@ -89,6 +90,7 @@ include templates/OWNER.md.template
 include tests/test_awl_assets.py
 include tests/test_awl_check.py
 include tests/test_awl_claude_code.py
+include tests/test_awl_codex.py
 include tests/test_awl_lifecycle_commands.py
 include tests/test_awl_new.py
 include tests/test_awl_readonly.py
@@ -101,6 +103,7 @@ include tools/awl/check.py
 include tools/awl/claude_code.py
 include tools/awl/cli.py
 include tools/awl/close.py
+include tools/awl/codex.py
 include tools/awl/list.py
 include tools/awl/markdown.py
 include tools/awl/new.py

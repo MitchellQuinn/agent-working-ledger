@@ -1,5 +1,7 @@
 # Agent Working Ledger
 
+[![CI](https://github.com/MitchellQuinn/agent-working-ledger/actions/workflows/ci.yml/badge.svg)](https://github.com/MitchellQuinn/agent-working-ledger/actions/workflows/ci.yml)
+
 **Make AI coding agents resumable.**
 
 Agent Working Ledger gives long-running software-agent work a durable,
@@ -50,7 +52,7 @@ A developer asks an agent to fix a bug.
 
 ```bash
 awl new "OAuth refresh fix" --slug oauth-refresh-fix
-````
+```
 
 The helper prints the standalone scope ID separately from the created paths so
 it can be copied into another thread.
@@ -203,6 +205,7 @@ awl summarize working-ledger/<ledger-owner-id>/
 awl list --root working-ledger
 awl assets
 awl install-claude-code-skill
+awl install-codex-skill
 ```
 
 See:
@@ -288,6 +291,32 @@ docs/claude-code-adapter.md
 
 for Claude Code install and smoke-test steps.
 
+### Create a Codex skill
+
+```bash
+awl install-codex-skill
+```
+
+`awl install-codex-skill` creates a Codex-ready user skill under
+`$CODEX_HOME/skills/agent-working-ledger/`, or
+`~/.codex/skills/agent-working-ledger/` when `CODEX_HOME` is unset, by combining
+the canonical skill package with the Codex wrapper. It refuses to overwrite an
+existing target.
+
+For a repository-scoped Codex skill, pass an explicit target:
+
+```bash
+awl install-codex-skill --target .agents/skills/agent-working-ledger
+```
+
+See:
+
+```text
+docs/codex-adapter.md
+```
+
+for Codex install, invocation, and smoke-test steps.
+
 ### Close or supersede a scope
 
 ```bash
@@ -356,14 +385,16 @@ compliant, authorized, or complete.
 
 ## Release boundary
 
-The `0.1.0` release ships a bounded Claude Code skill materializer:
+The `0.1.0` release ships bounded Claude Code and Codex skill materializers:
 
 ```bash
 awl install-claude-code-skill
+awl install-codex-skill
 ```
 
-That helper only creates a Claude Code-ready skill directory from the packaged
-canonical skill and wrapper assets. The release intentionally does not ship:
+Those helpers only create Claude Code-ready or Codex-ready skill directories
+from the packaged canonical skill and wrapper assets. The release intentionally
+does not ship:
 
 * repair commands
 * code generators

@@ -11,7 +11,10 @@ requires-python = ">=3.10"
 license = "MIT"
 license-files = ["LICENSE"]
 authors = [
-  { name = "Agent Working Ledger contributors" }
+  { name = "Mitchell Quinn" }
+]
+maintainers = [
+  { name = "Mitchell Quinn" }
 ]
 keywords = ["agents", "ledger", "handoff", "resumability", "cli"]
 classifiers = [
@@ -24,6 +27,12 @@ classifiers = [
   "Topic :: Utilities",
 ]
 dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/MitchellQuinn/agent-working-ledger"
+Repository = "https://github.com/MitchellQuinn/agent-working-ledger"
+Issues = "https://github.com/MitchellQuinn/agent-working-ledger/issues"
+Documentation = "https://github.com/MitchellQuinn/agent-working-ledger#readme"
 
 [project.scripts]
 awl = "tools.awl.cli:main"
@@ -98,6 +107,7 @@ include = ["tools*"]
   "docs/assets-command.md",
   "docs/checker.md",
   "docs/claude-code-adapter.md",
+  "docs/codex-adapter.md",
   "docs/close-command.md",
   "docs/comparison-with-plans.md",
   "docs/installation.md",

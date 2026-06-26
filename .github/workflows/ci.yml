@@ -39,6 +39,7 @@ jobs:
               "share/agent-working-ledger/wrappers/claude-code/SKILL.md",
               "share/agent-working-ledger/wrappers/codex/SKILL.md",
               "share/agent-working-ledger/docs/quickstart.md",
+              "share/agent-working-ledger/docs/codex-adapter.md",
               "share/agent-working-ledger/examples/README.md",
               "share/agent-working-ledger/evals/README.md",
           ]
@@ -78,3 +79,17 @@ jobs:
           tmpdir="$(mktemp -d)"
           awl new "CI wheel smoke" --root "$tmpdir" --owner-id ci-wheel-smoke
           awl check "$tmpdir/ci-wheel-smoke"
+          claude_target="$tmpdir/claude-skill/agent-working-ledger"
+          codex_target="$tmpdir/codex-skill/agent-working-ledger"
+          awl install-claude-code-skill --target "$claude_target"
+          awl install-codex-skill --target "$codex_target"
+          test -f "$claude_target/SKILL.md"
+          test -f "$claude_target/templates/ledger.md.template"
+          test -f "$claude_target/runtime-capabilities.md"
+          test -f "$claude_target/CLAUDE.md-snippet.md"
+          test -f "$codex_target/SKILL.md"
+          test -f "$codex_target/templates/ledger.md.template"
+          test -f "$codex_target/runtime-capabilities.md"
+          test -f "$codex_target/AGENTS.md-snippet.md"
+          grep -q "Claude Code Runtime Binding" "$claude_target/SKILL.md"
+          grep -q "Codex Runtime Binding" "$codex_target/SKILL.md"

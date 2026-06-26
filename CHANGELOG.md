@@ -26,6 +26,10 @@
 - Added `awl install-claude-code-skill` to materialize a Claude Code-ready
   project or personal skill directory from the canonical skill and wrapper
   assets.
+- Added `awl install-codex-skill` to materialize a Codex-ready user or
+  repository skill directory from the canonical skill and wrapper assets.
+- Added portfolio-ready project metadata and a GitHub Actions CI badge for the
+  public `MitchellQuinn/agent-working-ledger` repository.
 - Bundled templates with the canonical skill package and packaged release
   assets under `share/agent-working-ledger/`.
 - Added example ledger scopes under `examples/`.

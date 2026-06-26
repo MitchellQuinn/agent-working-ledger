@@ -34,7 +34,7 @@ Manual GitHub tag and Release creation are tracked in
 Install from source:
 
 ```bash
-python -m pip install git+https://github.com/MitchellQuinn/agent-working-ledger.git
+python -m pip install git+https://github.com/MitchellQuinn/agent-working-ledger.git@v0.1.0
 ```
 
 Create a task-local scope with the optional continuation sidecars, then inspect

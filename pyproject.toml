@@ -116,7 +116,6 @@ include = ["agent_working_ledger*"]
   "docs/multi-agent-use.md",
   "docs/new-command.md",
   "docs/quickstart.md",
-  "docs/release-checklist.md",
   "docs/summarize-command.md",
   "docs/supersede-command.md",
 ]

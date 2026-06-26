@@ -26,8 +26,8 @@ The source specification is currently on iteration `v0.3`. The specification
 version describes the ledger schema and expected behaviour. It is not the
 package release number.
 
-Manual GitHub tag and Release creation are tracked in
-`docs/release-checklist.md`.
+`v0.1.0` is distributed as a source install from GitHub. Install the tagged
+release explicitly with `@v0.1.0`.
 
 ## Quick start
 
@@ -475,8 +475,8 @@ remains the authority.
 
 ## Validation
 
-For release validation, use `docs/release-checklist.md`. Core local checks
-include:
+Release validation is performed through the test suite, package build, and
+installed CLI smoke tests. Core local checks include:
 
 Build wheels from a clean checkout, or remove ignored `build/`, `dist/`, and
 `*.egg-info/` artifacts first.

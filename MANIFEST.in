@@ -15,7 +15,6 @@ include docs/manual-evals.md
 include docs/multi-agent-use.md
 include docs/new-command.md
 include docs/quickstart.md
-include docs/release-checklist.md
 include docs/summarize-command.md
 include docs/supersede-command.md
 include documents/agent-working-ledger-skill-specification-v0.3.md
@@ -117,7 +116,6 @@ include wrappers/codex/runtime-capabilities.md
 include wrappers/codex/SKILL.md
 include wrappers/generic-cli-agent/prompt-wrapper.md
 include wrappers/generic-cli-agent/runtime-capabilities.md
-exclude docs/release-readiness.md
 prune .claude
 prune .github
 prune working-ledger

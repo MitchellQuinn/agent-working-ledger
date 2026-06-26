@@ -475,8 +475,9 @@ remains the authority.
 
 ## Validation
 
-Release validation is performed through the test suite, package build, and
-installed CLI smoke tests. Core local checks include:
+Release validation is performed through the test suite, compile checks, package
+build, installed CLI smoke checks, and wrapper asset inspection. Core local
+checks include:
 
 Build wheels from a clean checkout, or remove ignored `build/`, `dist/`, and
 `*.egg-info/` artifacts first.

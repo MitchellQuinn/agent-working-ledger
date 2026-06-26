@@ -4,6 +4,7 @@ import unittest
 from pathlib import Path
 
 from agent_working_ledger.check import check_scope
+from agent_working_ledger.list import list_ledgers
 
 
 class ExampleLedgerTests(unittest.TestCase):
@@ -19,6 +20,15 @@ class ExampleLedgerTests(unittest.TestCase):
                 failures.append(f"{scope}: {codes}")
 
         self.assertEqual(failures, [])
+
+    def test_list_examples_reports_nested_parallel_scopes(self) -> None:
+        result = list_ledgers(Path("examples"))
+
+        scopes = {entry.scope.replace("\\", "/"): entry for entry in result.entries}
+        self.assertIn("examples/parallel-subagents/parallel-parent", scopes)
+        self.assertIn("examples/parallel-subagents/parallel-subagent", scopes)
+        self.assertNotIn("examples/parallel-subagents", scopes)
+        self.assertTrue(all(entry.ok for entry in result.entries))
 
 
 if __name__ == "__main__":

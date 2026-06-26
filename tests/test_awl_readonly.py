@@ -113,6 +113,30 @@ class ListTests(unittest.TestCase):
             self.assertEqual(by_name["superseded-owner"].lifecycle_state, "Superseded")
             self.assertFalse(by_name["malformed-owner"].ok)
 
+    def test_list_discovers_nested_scopes_below_grouping_folder(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / "examples"
+            group = root / "parallel-subagents"
+            create_ledger("Parent task", root=group, owner_id="parallel-parent")
+            create_ledger("Subagent task", root=group, owner_id="parallel-subagent")
+
+            result = list_ledgers(root)
+
+            by_name = {Path(entry.scope).name: entry for entry in result.entries}
+            self.assertEqual(set(by_name), {"parallel-parent", "parallel-subagent"})
+            self.assertTrue(by_name["parallel-parent"].ok)
+            self.assertTrue(by_name["parallel-subagent"].ok)
+
+    def test_list_accepts_root_that_is_a_ledger_scope(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            created = create_ledger("Root scope", root=Path(tmp), owner_id="root-owner")
+
+            result = list_ledgers(created.scope)
+
+            self.assertEqual(len(result.entries), 1)
+            self.assertEqual(result.entries[0].scope_id, "root-owner")
+            self.assertTrue(result.entries[0].ok)
+
     def test_cli_list_json(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp) / "working-ledger"

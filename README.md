@@ -260,7 +260,9 @@ state.
 awl list --root working-ledger
 ```
 
-`awl list` is read-only. It lists ledger scopes under the selected root.
+`awl list` is read-only. It lists ledger scopes under the selected root. If a
+child directory is only a grouping folder, nested ledger scopes are reported
+instead.
 
 ### Locate release assets
 

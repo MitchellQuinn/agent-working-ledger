@@ -7,6 +7,8 @@ from typing import Any
 from .check import check_scope
 from .markdown import field
 
+LEDGER_MARKERS = ("OWNER.md", "ledger.md", "evidence", "notes")
+
 
 @dataclass(frozen=True)
 class LedgerListEntry:
@@ -69,24 +71,12 @@ def list_ledgers(root: str | Path = "working-ledger") -> LedgerListResult:
             ),
         )
 
+    if _has_ledger_marker(root_path):
+        return LedgerListResult(root=str(root_path), entries=(_entry_for_scope(root_path),))
+
     entries: list[LedgerListEntry] = []
-    for candidate in sorted((path for path in root_path.iterdir() if path.is_dir()), key=lambda path: path.name.lower()):
-        check = check_scope(candidate)
-        ledger_text = _read_ledger(candidate)
-        owner_id = field(ledger_text, "Ledger owner ID") if ledger_text else None
-        entries.append(
-            LedgerListEntry(
-                scope_id=owner_id or candidate.name,
-                scope=str(candidate),
-                owner_id=owner_id,
-                lifecycle_state=field(ledger_text, "Lifecycle State") if ledger_text else None,
-                last_updated=field(ledger_text, "Last updated") if ledger_text else None,
-                objective=field(ledger_text, "User objective") if ledger_text else None,
-                ok=check.ok,
-                error_count=check.error_count,
-                warning_count=check.warning_count,
-            )
-        )
+    for candidate in _discover_candidates(root_path):
+        entries.append(_entry_for_scope(candidate))
     return LedgerListResult(root=str(root_path), entries=tuple(entries))
 
 
@@ -117,3 +107,58 @@ def _read_ledger(scope: Path) -> str | None:
         return ledger_path.read_text(encoding="utf-8")
     except OSError:
         return None
+
+
+def _entry_for_scope(scope: Path) -> LedgerListEntry:
+    check = check_scope(scope)
+    ledger_text = _read_ledger(scope)
+    owner_id = field(ledger_text, "Ledger owner ID") if ledger_text else None
+    return LedgerListEntry(
+        scope_id=owner_id or scope.name,
+        scope=str(scope),
+        owner_id=owner_id,
+        lifecycle_state=field(ledger_text, "Lifecycle State") if ledger_text else None,
+        last_updated=field(ledger_text, "Last updated") if ledger_text else None,
+        objective=field(ledger_text, "User objective") if ledger_text else None,
+        ok=check.ok,
+        error_count=check.error_count,
+        warning_count=check.warning_count,
+    )
+
+
+def _discover_candidates(root: Path) -> tuple[Path, ...]:
+    candidates: list[Path] = []
+    for child in _child_dirs(root):
+        if _has_ledger_marker(child):
+            candidates.append(child)
+            continue
+
+        nested = _discover_marked_scopes(child)
+        if nested:
+            candidates.extend(nested)
+        else:
+            candidates.append(child)
+    return tuple(candidates)
+
+
+def _discover_marked_scopes(root: Path) -> tuple[Path, ...]:
+    scopes: list[Path] = []
+    for child in _child_dirs(root):
+        if _has_ledger_marker(child):
+            scopes.append(child)
+        else:
+            scopes.extend(_discover_marked_scopes(child))
+    return tuple(scopes)
+
+
+def _has_ledger_marker(scope: Path) -> bool:
+    return any((scope / marker).exists() for marker in LEDGER_MARKERS)
+
+
+def _child_dirs(root: Path) -> tuple[Path, ...]:
+    return tuple(
+        sorted(
+            (path for path in root.iterdir() if path.is_dir()),
+            key=lambda path: str(path).lower(),
+        )
+    )

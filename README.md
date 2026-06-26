@@ -356,11 +356,18 @@ compliant, authorized, or complete.
 
 ## Release boundary
 
-The `0.1.0` release intentionally does not ship:
+The `0.1.0` release ships a bounded Claude Code skill materializer:
+
+```bash
+awl install-claude-code-skill
+```
+
+That helper only creates a Claude Code-ready skill directory from the packaged
+canonical skill and wrapper assets. The release intentionally does not ship:
 
 * repair commands
 * code generators
-* install helpers
+* general runtime installers
 * issue-tracker integrations
 * automatic migration tooling
 * autonomous adoption of existing ledgers

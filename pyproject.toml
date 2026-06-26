@@ -38,107 +38,164 @@ include = ["tools*"]
   "README.md",
 ]
 "share/agent-working-ledger/documents" = [
-  "documents/*.md",
+  "documents/agent-working-ledger-skill-specification-v0.3.md",
 ]
 "share/agent-working-ledger/spec" = [
-  "spec/*.md",
+  "spec/SPEC.md",
+  "spec/invariants.md",
+  "spec/ledger-scope.md",
+  "spec/lifecycle.md",
+  "spec/ownership-model.md",
+  "spec/threat-model.md",
+  "spec/validation-model.md",
 ]
 "share/agent-working-ledger/protocols" = [
-  "protocols/*.md",
+  "protocols/adopt-ledger.md",
+  "protocols/close-ledger.md",
+  "protocols/create-ledger.md",
+  "protocols/handoff.md",
+  "protocols/orient.md",
+  "protocols/record-decision.md",
+  "protocols/record-discovery.md",
+  "protocols/record-validation.md",
+  "protocols/recover.md",
+  "protocols/supersede-ledger.md",
+  "protocols/update-ledger.md",
 ]
 "share/agent-working-ledger/templates" = [
-  "templates/*.template",
+  "templates/OWNER.md.template",
+  "templates/evidence-README.md.template",
+  "templates/handoff.md.template",
+  "templates/ledger.md.template",
+  "templates/machine-state.json.template",
 ]
 "share/agent-working-ledger/skills/agent-working-ledger" = [
   "skills/agent-working-ledger/SKILL.md",
 ]
 "share/agent-working-ledger/skills/agent-working-ledger/templates" = [
-  "skills/agent-working-ledger/templates/*.template",
+  "skills/agent-working-ledger/templates/OWNER.md.template",
+  "skills/agent-working-ledger/templates/evidence-README.md.template",
+  "skills/agent-working-ledger/templates/handoff.md.template",
+  "skills/agent-working-ledger/templates/ledger.md.template",
+  "skills/agent-working-ledger/templates/machine-state.json.template",
 ]
 "share/agent-working-ledger/wrappers/claude-code" = [
-  "wrappers/claude-code/*.md",
+  "wrappers/claude-code/CLAUDE.md-snippet.md",
+  "wrappers/claude-code/SKILL.md",
+  "wrappers/claude-code/runtime-capabilities.md",
 ]
 "share/agent-working-ledger/wrappers/codex" = [
-  "wrappers/codex/*.md",
+  "wrappers/codex/AGENTS.md-snippet.md",
+  "wrappers/codex/SKILL.md",
+  "wrappers/codex/runtime-capabilities.md",
 ]
 "share/agent-working-ledger/wrappers/generic-cli-agent" = [
-  "wrappers/generic-cli-agent/*.md",
+  "wrappers/generic-cli-agent/prompt-wrapper.md",
+  "wrappers/generic-cli-agent/runtime-capabilities.md",
 ]
 "share/agent-working-ledger/docs" = [
-  "docs/*.md",
+  "docs/anti-patterns.md",
+  "docs/assets-command.md",
+  "docs/checker.md",
+  "docs/claude-code-adapter.md",
+  "docs/close-command.md",
+  "docs/comparison-with-plans.md",
+  "docs/installation.md",
+  "docs/list-command.md",
+  "docs/manual-evals.md",
+  "docs/multi-agent-use.md",
+  "docs/new-command.md",
+  "docs/quickstart.md",
+  "docs/summarize-command.md",
+  "docs/supersede-command.md",
 ]
 "share/agent-working-ledger/examples" = [
-  "examples/*.md",
+  "examples/README.md",
 ]
 "share/agent-working-ledger/examples/debugging" = [
-  "examples/debugging/*.md",
+  "examples/debugging/OWNER.md",
+  "examples/debugging/ledger.md",
 ]
 "share/agent-working-ledger/examples/debugging/evidence" = [
-  "examples/debugging/evidence/*.md",
+  "examples/debugging/evidence/README.md",
 ]
 "share/agent-working-ledger/examples/debugging/notes" = [
-  "examples/debugging/notes/*.md",
+  "examples/debugging/notes/README.md",
 ]
 "share/agent-working-ledger/examples/feature-implementation" = [
-  "examples/feature-implementation/*.md",
+  "examples/feature-implementation/OWNER.md",
+  "examples/feature-implementation/ledger.md",
 ]
 "share/agent-working-ledger/examples/feature-implementation/evidence" = [
-  "examples/feature-implementation/evidence/*.md",
+  "examples/feature-implementation/evidence/README.md",
 ]
 "share/agent-working-ledger/examples/feature-implementation/notes" = [
-  "examples/feature-implementation/notes/*.md",
+  "examples/feature-implementation/notes/README.md",
 ]
 "share/agent-working-ledger/examples/handoff" = [
-  "examples/handoff/*.md",
+  "examples/handoff/OWNER.md",
+  "examples/handoff/handoff.md",
+  "examples/handoff/ledger.md",
 ]
 "share/agent-working-ledger/examples/handoff/evidence" = [
-  "examples/handoff/evidence/*.md",
+  "examples/handoff/evidence/README.md",
 ]
 "share/agent-working-ledger/examples/handoff/notes" = [
-  "examples/handoff/notes/*.md",
+  "examples/handoff/notes/README.md",
 ]
 "share/agent-working-ledger/examples/parallel-subagents" = [
-  "examples/parallel-subagents/*.md",
+  "examples/parallel-subagents/README.md",
 ]
 "share/agent-working-ledger/examples/parallel-subagents/parallel-parent" = [
-  "examples/parallel-subagents/parallel-parent/*.md",
+  "examples/parallel-subagents/parallel-parent/OWNER.md",
+  "examples/parallel-subagents/parallel-parent/ledger.md",
 ]
 "share/agent-working-ledger/examples/parallel-subagents/parallel-parent/evidence" = [
-  "examples/parallel-subagents/parallel-parent/evidence/*.md",
+  "examples/parallel-subagents/parallel-parent/evidence/README.md",
 ]
 "share/agent-working-ledger/examples/parallel-subagents/parallel-parent/notes" = [
-  "examples/parallel-subagents/parallel-parent/notes/*.md",
+  "examples/parallel-subagents/parallel-parent/notes/README.md",
 ]
 "share/agent-working-ledger/examples/parallel-subagents/parallel-subagent" = [
-  "examples/parallel-subagents/parallel-subagent/*.md",
+  "examples/parallel-subagents/parallel-subagent/OWNER.md",
+  "examples/parallel-subagents/parallel-subagent/ledger.md",
 ]
 "share/agent-working-ledger/examples/parallel-subagents/parallel-subagent/evidence" = [
-  "examples/parallel-subagents/parallel-subagent/evidence/*.md",
+  "examples/parallel-subagents/parallel-subagent/evidence/README.md",
 ]
 "share/agent-working-ledger/examples/parallel-subagents/parallel-subagent/notes" = [
-  "examples/parallel-subagents/parallel-subagent/notes/*.md",
+  "examples/parallel-subagents/parallel-subagent/notes/README.md",
 ]
 "share/agent-working-ledger/examples/superseded" = [
-  "examples/superseded/*.md",
+  "examples/superseded/OWNER.md",
+  "examples/superseded/ledger.md",
 ]
 "share/agent-working-ledger/examples/superseded/evidence" = [
-  "examples/superseded/evidence/*.md",
+  "examples/superseded/evidence/README.md",
 ]
 "share/agent-working-ledger/examples/superseded/notes" = [
-  "examples/superseded/notes/*.md",
+  "examples/superseded/notes/README.md",
 ]
 "share/agent-working-ledger/evals" = [
-  "evals/*.md",
+  "evals/README.md",
 ]
 "share/agent-working-ledger/evals/rubrics" = [
-  "evals/rubrics/*.md",
+  "evals/rubrics/auditability.md",
+  "evals/rubrics/contamination-resistance.md",
+  "evals/rubrics/resumability.md",
+  "evals/rubrics/validation-quality.md",
 ]
 "share/agent-working-ledger/evals/scenarios" = [
-  "evals/scenarios/*.md",
+  "evals/scenarios/failed-test-loop.md",
+  "evals/scenarios/handoff-after-compaction.md",
+  "evals/scenarios/interrupted-refactor.md",
+  "evals/scenarios/parallel-agent-contamination.md",
+  "evals/scenarios/stale-assumption.md",
 ]
 "share/agent-working-ledger/evals/templates" = [
-  "evals/templates/*.md",
+  "evals/templates/manual-run.md",
+  "evals/templates/scoring-sheet.md",
 ]
 "share/agent-working-ledger/evals/runs" = [
-  "evals/runs/*.md",
+  "evals/runs/interrupted-refactor-example.md",
 ]

@@ -36,16 +36,37 @@ jobs:
               "share/agent-working-ledger/templates/OWNER.md.template",
               "share/agent-working-ledger/skills/agent-working-ledger/SKILL.md",
               "share/agent-working-ledger/skills/agent-working-ledger/templates/OWNER.md.template",
+              "share/agent-working-ledger/wrappers/claude-code/SKILL.md",
               "share/agent-working-ledger/wrappers/codex/SKILL.md",
               "share/agent-working-ledger/docs/quickstart.md",
               "share/agent-working-ledger/examples/README.md",
               "share/agent-working-ledger/evals/README.md",
           ]
+          forbidden = [
+              ".claude/",
+              ".egg-info/",
+              "docs/release-readiness.md",
+          ]
+          forbidden_parts = {
+              ".claude",
+              "working-ledger",
+              "output",
+              "build",
+              "__pycache__",
+          }
           with zipfile.ZipFile(wheel) as archive:
-              names = archive.namelist()
+              names = [name.replace("\\", "/") for name in archive.namelist()]
           missing = [path for path in required if not any(name.endswith(path) for name in names)]
           if missing:
               raise SystemExit("Missing wheel asset(s): " + ", ".join(missing))
+          leaked = [
+              name
+              for name in names
+              if any(marker in name for marker in forbidden)
+              or any(part in forbidden_parts for part in Path(name).parts)
+          ]
+          if leaked:
+              raise SystemExit("Forbidden wheel asset(s): " + ", ".join(leaked))
           PY
       - name: Smoke test installed wheel
         run: |

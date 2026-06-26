@@ -23,6 +23,9 @@ build/
 coverage/
 output/
 
+# Runtime-local generated agent skill installs
+.claude/
+
 # Agent task-local ledgers created while using this repo
 working-ledger/
 

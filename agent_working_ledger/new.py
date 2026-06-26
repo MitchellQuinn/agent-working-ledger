@@ -4,7 +4,7 @@ import json
 import re
 import secrets
 from dataclasses import dataclass
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -186,10 +186,10 @@ def format_new_text(result: NewLedgerResult) -> str:
 
 
 def _utc_timestamp(now: datetime | None) -> str:
-    value = now or datetime.now(UTC)
+    value = now or datetime.now(timezone.utc)
     if value.tzinfo is None:
-        value = value.replace(tzinfo=UTC)
-    return value.astimezone(UTC).strftime("%Y%m%dT%H%M%SZ")
+        value = value.replace(tzinfo=timezone.utc)
+    return value.astimezone(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
 
 
 def _generated_owner_id(timestamp: str, runtime: str, slug: str | None) -> str:

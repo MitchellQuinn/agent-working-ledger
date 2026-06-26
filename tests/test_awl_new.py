@@ -4,7 +4,7 @@ import json
 import tempfile
 import unittest
 from contextlib import redirect_stderr, redirect_stdout
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 from io import StringIO
 from pathlib import Path
 
@@ -79,7 +79,7 @@ class NewLedgerTests(unittest.TestCase):
                 root=Path(tmp) / "working-ledger",
                 slug="OAuth Refresh Fix",
                 runtime="Codex Desktop",
-                now=datetime(2026, 6, 20, 14, 30, 12, tzinfo=UTC),
+                now=datetime(2026, 6, 20, 14, 30, 12, tzinfo=timezone.utc),
             )
 
             owner_id = Path(result.scope).name
